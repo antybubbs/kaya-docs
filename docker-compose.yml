@@ -1,0 +1,13 @@
+services:
+  kaya-docs:
+    build: .
+    container_name: kaya-docs
+    ports:
+      - "3000:3000"
+    environment:
+      DOCS_CONTENT_DIR: /app/content
+      DOCS_DATA_DIR: /app/data
+    volumes:
+      - ./content:/app/content
+      - ./data:/app/data
+    restart: unless-stopped

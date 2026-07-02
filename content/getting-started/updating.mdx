@@ -1,0 +1,25 @@
+---
+title: "Updating"
+description: "Update Kaya safely with Docker Compose."
+order: 3
+version: "current"
+---
+
+Before updating, take a backup and read the release notes for any migration steps.
+
+```bash
+docker compose pull
+docker compose up -d
+docker compose logs -f
+```
+
+## Recommended update process
+
+1. Back up the database and uploaded files.
+2. Pull the new image or update the checked-out source.
+3. Restart the Compose stack.
+4. Check the dashboard, audit log and key modules.
+
+<Callout type="warning" title="Confirm migration behavior">
+Document the real database migration command or automatic migration behavior before using this in production docs.
+</Callout>

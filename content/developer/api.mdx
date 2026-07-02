@@ -1,0 +1,17 @@
+---
+title: "API"
+description: "API notes for docs editing and search."
+order: 2
+version: "current"
+---
+
+The docs app exposes internal API routes for editor workflows.
+
+| Route | Purpose |
+| --- | --- |
+| `/api/search` | Returns a local documentation search index |
+| `/api/auth/login` | Starts an editor session |
+| `/api/auth/logout` | Ends the session |
+| `/api/docs` | Lists, creates, updates and deletes MDX files |
+
+These routes are intended for the docs web app. Treat them as internal until an external API contract is designed.

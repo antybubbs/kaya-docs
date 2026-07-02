@@ -1,0 +1,17 @@
+---
+title: "Architecture"
+description: "Understand the Kaya Docs architecture."
+order: 1
+version: "current"
+---
+
+Kaya Docs is a Docker-hosted Next.js application. Documentation lives as MDX files under `content/`.
+
+## Main parts
+
+- `app/` contains public pages and API routes.
+- `components/` contains shared UI and MDX components.
+- `lib/` contains content loading, search preparation and authentication helpers.
+- `content/` contains editable documentation pages.
+
+The editor currently writes to local files. A Git write-back adapter can be added behind the same API later.

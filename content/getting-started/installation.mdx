@@ -1,0 +1,31 @@
+---
+title: "Installation"
+description: "Install Kaya using Docker Compose."
+order: 1
+version: "current"
+---
+
+<Callout type="warning" title="Needs expansion">
+Confirm the final production image name, required environment variables and persistent volume paths before publishing this page.
+</Callout>
+
+Kaya is intended to run as a self-hosted web application. The usual deployment shape is a Docker Compose stack with application services, persistent storage and a reverse proxy in front of the app.
+
+## Before you begin
+
+- A Linux host or virtual machine with Docker and Docker Compose installed.
+- A DNS name if you plan to expose Kaya through HTTPS.
+- A persistent storage location for database, uploaded files and backups.
+
+## Compose flow
+
+<Steps>
+
+1. Clone the Kaya repository onto the host.
+2. Copy the example environment file and set secrets, hostnames and storage paths.
+3. Start the stack with `docker compose up -d`.
+4. Open the configured Kaya URL and complete first login.
+
+</Steps>
+
+Keep the Compose file and `.env` under version control only if secrets are handled safely.
