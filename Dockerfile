@@ -15,6 +15,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
+RUN apk add --no-cache su-exec
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 RUN mkdir -p /app/data /app/content /app/default-content && chown nextjs:nodejs /app/data /app/content /app/default-content
 COPY --from=builder /app/public ./public
@@ -23,7 +24,6 @@ COPY --chown=nextjs:nodejs docker-entrypoint.sh ./docker-entrypoint.sh
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 RUN chmod +x /app/docker-entrypoint.sh
-USER nextjs
 EXPOSE 3000
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["node", "server.js"]
