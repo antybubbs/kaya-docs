@@ -38,15 +38,15 @@ git checkout "$LATEST_TAG"
 KAYA_DOCS_VERSION="$LATEST_TAG" docker compose up -d
 ```
 
-Use a branch for development or unreleased docs work:
+Use a branch for development or unreleased docs work. Development branches publish matching GHCR tags after the branch workflow completes:
 
 ```bash
-git clone --branch main --single-branch https://github.com/antybubbs/kaya-docs.git
+git clone --branch dev-docs0.0.1 --single-branch https://github.com/antybubbs/kaya-docs.git
 cd kaya-docs
-docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+KAYA_DOCS_VERSION=dev-docs0.0.1 docker compose up -d
 ```
 
-For the current developer documentation branch, replace `main` with `dev-docs0.0.1`.
+That pulls `ghcr.io/antybubbs/kaya-docs:dev-docs0.0.1`. If the branch was just pushed, wait for the GitHub Actions image build to complete before installing.
 
 ## Run With Docker
 
@@ -68,7 +68,13 @@ The site listens on port `3000` by default. Override the image tag or port with 
 KAYA_DOCS_VERSION=v0.1.0 KAYA_DOCS_PORT=8080 docker compose up -d
 ```
 
-For branch or local development builds, use the build override:
+For development branch images, set `KAYA_DOCS_VERSION` to the branch name:
+
+```bash
+KAYA_DOCS_VERSION=dev-docs0.0.1 docker compose up -d
+```
+
+For local source builds before a branch image exists, use the build override:
 
 ```bash
 git checkout dev-docs0.0.1

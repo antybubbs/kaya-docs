@@ -77,7 +77,11 @@ git checkout -b dev0.24.0
 git push -u origin dev0.24.0
 ```
 
-Branch installs are documented in [Installation](/docs/getting-started/installation). They build from checked-out Kaya source unless a branch image is published deliberately.
+Kaya's GitHub Actions publish matching GHCR image tags for `dev*` branches. After the branch image build completes, branch installs can use the branch name as the image tag:
+
+```bash
+KAYA_IMAGE=ghcr.io/antybubbs/kaya:dev0.24.0 docker compose up -d
+```
 
 ## Documentation updates
 
