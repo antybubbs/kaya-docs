@@ -9,9 +9,17 @@ mkdir -p "$CONTENT_DIR"
 mkdir -p "$DATA_DIR"
 chown -R nextjs:nodejs "$CONTENT_DIR" "$DATA_DIR"
 
-if [ -d "$DEFAULT_CONTENT_DIR" ] && ! find "$CONTENT_DIR" -type f -name '*.mdx' -print -quit | grep -q .; then
-  echo "Seeding Kaya documentation content into $CONTENT_DIR"
-  cp -R "$DEFAULT_CONTENT_DIR"/. "$CONTENT_DIR"/
+if [ -d "$DEFAULT_CONTENT_DIR" ]; then
+  echo "Syncing new Kaya documentation pages into $CONTENT_DIR"
+  find "$DEFAULT_CONTENT_DIR" -type f -name '*.mdx' | while IFS= read -r source_file; do
+    relative_path="${source_file#"$DEFAULT_CONTENT_DIR"/}"
+    destination_file="$CONTENT_DIR/$relative_path"
+
+    if [ ! -f "$destination_file" ]; then
+      mkdir -p "$(dirname "$destination_file")"
+      cp "$source_file" "$destination_file"
+    fi
+  done
   chown -R nextjs:nodejs "$CONTENT_DIR"
 fi
 
