@@ -1,18 +1,36 @@
----
+﻿---
 title: "Common Issues"
-description: "Resolve common Kaya Docs and deployment issues."
+description: "Resolve common Kaya deployment and operation issues."
 order: 1
 version: "current"
 ---
 
-## The editor cannot save
+## Kaya does not start after an update
 
-Check that the container can write to the mounted `content/` directory.
+Check container logs first:
 
-## Search results are stale
+```bash
+docker compose logs -f kaya
+```
 
-The search index is generated from local MDX files. Refresh the page after editing content.
+If the failure happened during migration, confirm that `data/kaya.db` is present and restore from backup if needed.
 
-## A page does not appear in the sidebar
+## I cannot log in after restore
 
-Confirm that the file ends in `.mdx`, has valid frontmatter and is inside the `content/` folder.
+Confirm that the restored `data/` directory includes both `kaya.db` and `.runtime.env`. The session secret and encryption key must match the restored database.
+
+## Stored secrets show as decryption failures
+
+Kaya cannot decrypt stored values without the original encryption key. Restore the original `data/.runtime.env` or the environment-provided `ENCRYPTION_KEY` used when the data was created.
+
+## Ping or network checks fail
+
+The Docker Compose deployment grants `NET_RAW` so ICMP ping can work from the container. If checks still fail, confirm host firewall, container networking and the target device's ICMP policy.
+
+## Remote RDP sessions do not connect
+
+Confirm the `guacd` service is running and that Remote Manager settings point to the configured guacd host and port. Review Kaya logs and browser console output for token or websocket errors.
+
+## Password reset email does not send
+
+Check SMTP settings in Site Administration, including host, port, TLS/SSL mode, username, password and from address. Use the test email action before relying on reset emails.

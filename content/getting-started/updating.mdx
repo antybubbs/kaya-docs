@@ -1,25 +1,75 @@
----
+﻿---
 title: "Updating"
-description: "Update Kaya safely with Docker Compose."
+description: "Update Kaya safely from images, tags or branches."
 order: 3
 version: "current"
 ---
 
-Before updating, take a backup and read the release notes for any migration steps.
+Before updating, back up `data/`, `uploads/` and `data/remote-recordings/`, then read the release notes for migration steps.
+
+## Update the default image install
+
+The default Compose file pulls the configured Kaya image.
 
 ```bash
 docker compose pull
 docker compose up -d
-docker compose logs -f
+docker compose logs -f kaya
+```
+
+By default this tracks:
+
+```text
+ghcr.io/antybubbs/kaya:latest
+```
+
+## Update to the latest release tag
+
+Use this path when the deployment tracks release tags.
+
+```bash
+git fetch --tags
+LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+git checkout "$LATEST_TAG"
+KAYA_IMAGE="ghcr.io/antybubbs/kaya:$LATEST_TAG" docker compose pull
+KAYA_IMAGE="ghcr.io/antybubbs/kaya:$LATEST_TAG" docker compose up -d
+docker compose logs -f kaya
+```
+
+At the time this page was last checked, the latest published Kaya tag was `v0.21.4`.
+
+## Update a branch-based install
+
+Use this path when testing `main`, `dev0.23.0` or another branch from source.
+
+```bash
+git checkout main
+git pull --ff-only
+docker build -t kaya:main .
+KAYA_IMAGE=kaya:main docker compose up -d
+docker compose logs -f kaya
+```
+
+For a different branch, replace `main` with the branch name and use a matching local image tag:
+
+```bash
+git checkout dev0.23.0
+git pull --ff-only
+docker build -t kaya:dev0.23.0 .
+KAYA_IMAGE=kaya:dev0.23.0 docker compose up -d
 ```
 
 ## Recommended update process
 
-1. Back up the database and uploaded files.
-2. Pull the new image or update the checked-out source.
-3. Restart the Compose stack.
-4. Check the dashboard, audit log and key modules.
+1. Back up `data/`, `uploads/` and `data/remote-recordings/`.
+2. Preserve `data/.runtime.env`.
+3. Pull the image, check out the release tag or pull the tracked branch.
+4. Rebuild only when using a source branch install.
+5. Restart the Compose stack.
+6. Open Kaya and confirm `/healthz` responds.
+7. Sign in and check the dashboard, audit log and key modules.
+8. Review container logs for errors.
 
-<Callout type="warning" title="Confirm migration behavior">
-Document the real database migration command or automatic migration behavior before using this in production docs.
+<Callout type="warning" title="Encryption key">
+Do not lose `data/.runtime.env`. Without the encryption key in that file, Kaya cannot decrypt stored secrets such as licence keys, provider credentials and backup passwords.
 </Callout>

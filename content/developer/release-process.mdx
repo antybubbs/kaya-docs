@@ -1,6 +1,6 @@
 ﻿---
 title: "Release Process"
-description: "Current release and documentation update expectations."
+description: "Current Kaya release and documentation update expectations."
 order: 12
 version: "current"
 ---
@@ -9,28 +9,79 @@ This page documents the current release expectations for Kaya and the developer 
 
 ## Versioning
 
-Kaya currently has an application version setting in `app/core/config.py`.
+Kaya uses Git branches for development and Git tags for stable releases.
 
-Developer documentation pages use the MDX `version` frontmatter field. The current docs use `current`, matching the existing Kaya Docs convention.
+The default Docker image is:
 
-When Kaya publishes a concrete release version, update relevant documentation in the same change set.
+```text
+ghcr.io/antybubbs/kaya:latest
+```
+
+Release tags should have matching container image tags so `KAYA_IMAGE=ghcr.io/antybubbs/kaya:vX.Y.Z docker compose up -d` works.
+
+Developer documentation pages use the MDX `version` frontmatter field. The current docs use `current`, matching the currently documented Kaya release stream.
+
+## Current GitHub state
+
+The Kaya repository is:
+
+```text
+https://github.com/antybubbs/Kaya.git
+```
+
+Relevant remote branches checked:
+
+- `main`
+- `dev0.23.0`
+
+Latest remote tag checked:
+
+- `v0.21.4`
 
 ## Release workflow
 
-Current repository tooling includes a `make release VERSION=...` target that creates and pushes a Git tag.
-
 Before release:
 
-1. Review changed modules.
+1. Review changed application behaviour.
 2. Update matching Developer Documentation pages.
-3. Update database and security docs for schema/security changes.
-4. Run available tests.
-5. Build the Docker image.
-6. Tag the release.
+3. Update installation, update and deployment docs if image, Compose or release behaviour changed.
+4. Run available checks and tests.
+5. Build and publish the Docker image.
+6. Merge the release-ready branch.
+7. Create a version tag.
+8. Push the tag to GitHub.
+9. Confirm install instructions work from the pushed tag and image.
+
+Example tag flow:
+
+```bash
+git checkout main
+git pull --ff-only
+git tag v0.22.0
+git push origin v0.22.0
+```
+
+Expected image tags for that release:
+
+```text
+ghcr.io/antybubbs/kaya:v0.22.0
+ghcr.io/antybubbs/kaya:latest
+```
+
+## Branch workflow
+
+Use branches for unreleased application work:
+
+```bash
+git checkout -b dev0.24.0
+git push -u origin dev0.24.0
+```
+
+Branch installs are documented in [Installation](/docs/getting-started/installation). They build from checked-out Kaya source unless a branch image is published deliberately.
 
 ## Documentation updates
 
-Documentation should be updated with the code that changes behaviour.
+Documentation should be updated with the code or behaviour that changes.
 
 Use these routing rules:
 
@@ -39,7 +90,8 @@ Use these routing rules:
 - Auth/security/upload/secret changes: update [Security](/docs/developer/security).
 - Agent/provider/API changes: update [API & Integrations](/docs/developer/api).
 - Operational/deployment changes: update [Deployment](/docs/developer/deployment).
+- Install, update or release changes: update [Installation](/docs/getting-started/installation), [Updating](/docs/getting-started/updating) and this page.
 
 ## Changelog process
 
-No dedicated changelog process was identified in the inspected Kaya application. Until one exists, release notes should be derived from merged changes and documentation updates.
+No dedicated changelog process was identified in the inspected repositories. Until one exists, release notes should be derived from merged changes and documentation updates.

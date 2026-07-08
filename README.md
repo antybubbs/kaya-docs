@@ -1,4 +1,4 @@
-# Kaya Docs
+﻿# Kaya Docs
 
 Kaya Docs is a Docker-hosted MDX documentation app for Kaya. It uses Next.js, React, TypeScript and a local `content/` directory so documentation can be edited through Git or through the protected in-app editor.
 
@@ -15,13 +15,67 @@ Open `http://localhost:3000`.
 
 On first run, open `/setup` to create the first administrator. Kaya Docs automatically creates and stores its authentication key in the local `data/` directory.
 
+
+## Install From GitHub
+
+Use the default one-command install after cloning the repo:
+
+```bash
+git clone https://github.com/antybubbs/kaya-docs.git
+cd kaya-docs
+docker compose up -d
+```
+
+Use a release tag for stable installs once tags are published:
+
+```bash
+git clone https://github.com/antybubbs/kaya-docs.git
+cd kaya-docs
+git fetch --tags
+LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+test -n "$LATEST_TAG" || { echo "No release tags are published yet. Install from a branch instead."; exit 1; }
+git checkout "$LATEST_TAG"
+KAYA_DOCS_VERSION="$LATEST_TAG" docker compose up -d
+```
+
+Use a branch for development or unreleased docs work:
+
+```bash
+git clone --branch main --single-branch https://github.com/antybubbs/kaya-docs.git
+cd kaya-docs
+docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+```
+
+For the current developer documentation branch, replace `main` with `dev-docs0.0.1`.
+
 ## Run With Docker
+
+The default Compose file is designed for a pull-and-run install:
 
 ```bash
 docker compose up -d
 ```
 
-The site listens on port `3000` by default. The Compose file bind-mounts:
+It pulls:
+
+```text
+ghcr.io/antybubbs/kaya-docs:latest
+```
+
+The site listens on port `3000` by default. Override the image tag or port with environment variables:
+
+```bash
+KAYA_DOCS_VERSION=v0.1.0 KAYA_DOCS_PORT=8080 docker compose up -d
+```
+
+For branch or local development builds, use the build override:
+
+```bash
+git checkout dev-docs0.0.1
+docker compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+```
+
+The Compose file bind-mounts:
 
 ```yaml
 volumes:

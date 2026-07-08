@@ -1,0 +1,5 @@
+﻿services:
+  kaya-docs:
+    build: .
+    image: ${KAYA_DOCS_IMAGE:-ghcr.io/antybubbs/kaya-docs}:${KAYA_DOCS_VERSION:-local}
+    pull_policy: never

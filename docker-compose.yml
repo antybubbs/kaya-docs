@@ -1,12 +1,17 @@
-services:
+﻿services:
   kaya-docs:
-    build: .
+    image: ${KAYA_DOCS_IMAGE:-ghcr.io/antybubbs/kaya-docs}:${KAYA_DOCS_VERSION:-latest}
     container_name: kaya-docs
+    pull_policy: always
     ports:
-      - "3000:3000"
+      - "${KAYA_DOCS_PORT:-3000}:3000"
     environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
       DOCS_CONTENT_DIR: /app/content
       DOCS_DATA_DIR: /app/data
+      DOCS_COOKIE_SECURE: ${DOCS_COOKIE_SECURE:-false}
+      DOCS_AUTH_SECRET: ${DOCS_AUTH_SECRET:-}
     volumes:
       - ./content:/app/content
       - ./data:/app/data
