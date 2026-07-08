@@ -1,0 +1,83 @@
+﻿---
+title: "Deployment"
+description: "Current Docker deployment and persistence model."
+order: 7
+version: "current"
+---
+
+Kaya is designed for Docker Compose deployment.
+
+## Docker service
+
+- Image: `ghcr.io/antybubbs/kaya:latest` by default
+- Container port: `8080`
+- Host port: `${KAYA_PORT:-8080}`
+- Entrypoint: `docker-entrypoint.sh`
+- Runtime: Uvicorn serving `app.main:app`
+- Filesystem: read-only container with writable volumes and tmpfs
+- Capability: `NET_RAW` for ping support
+- Security option: `no-new-privileges`
+
+## Compose services
+
+- `kaya`
+- `guacd` using `guacamole/guacd:1.6.0`
+
+## Persistent volumes
+
+- `./data:/app/data`
+- `./uploads:/app/uploads`
+- `./data/remote-recordings:/app/data/remote-recordings`
+
+Important persistent files:
+
+- `/app/data/kaya.db`
+- `/app/data/.runtime.env`
+- `/app/uploads`
+- `/app/data/remote-recordings`
+- `/app/data/kaya.db.pre-migration` when created
+
+## Environment settings
+
+Important environment/configuration values include:
+
+- `DATABASE_URL`
+- `SECRET_KEY`
+- `ENCRYPTION_KEY`
+- `BASE_URL`
+- `ALLOWED_HOSTS`
+- `SESSION_COOKIE_SECURE`
+- `DEMO_MODE`
+- Guacamole-related settings
+- Upload and recording size settings
+
+## Startup behaviour
+
+The entrypoint:
+
+1. Creates persistent data/upload/recording directories.
+2. Generates and preserves runtime secrets in `/app/data/.runtime.env` when not supplied.
+3. Handles demo seed/reset behaviour when demo mode is enabled.
+4. Optionally creates a pre-migration SQLite backup.
+5. Runs `scripts/migrate_sqlite.py`.
+6. Starts Uvicorn.
+
+## Upgrade considerations
+
+- Back up `data`, `uploads` and recordings before upgrading.
+- Preserve `.runtime.env`; losing the encryption key can make encrypted secrets unrecoverable.
+- Migrations are manual and additive.
+- Docker entrypoint can create a pre-migration SQLite backup.
+
+## Backup considerations
+
+The application's own persistent state is not fully captured by the Backup Manager module.
+
+Operational backups should include:
+
+- SQLite database
+- Runtime secrets
+- Uploads
+- Remote recordings
+
+If using remote backup targets, verify credentials and mount/access behaviour outside Kaya as well.

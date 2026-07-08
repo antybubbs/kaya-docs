@@ -1,0 +1,62 @@
+﻿---
+title: "Module: Runbook Manager"
+description: "Developer documentation for Runbook Manager."
+order: 202
+version: "current"
+---
+
+## Overview
+
+Runbook Manager stores operational documentation, recovery steps, maintenance checklists and internal service notes.
+
+## Features
+
+- Spaces.
+- Pages.
+- Parent/child page relationships.
+- Tags.
+- Search and filtering.
+- Tile/table view.
+- Markdown-like rendering.
+- Page history.
+
+## Navigation
+
+Users access it from `/documentation/runbook-manager` in the Documentation sidebar group.
+
+## Permissions
+
+- Read requires authenticated user.
+- Create/update/delete requires editor.
+
+## Database
+
+Models: `RunbookSpace`, `RunbookPage`, `RunbookPageHistory`, `User`.
+
+## Workflows
+
+1. User opens Runbook Manager.
+2. Kaya loads spaces and pages.
+3. User filters/searches by text, space or tags.
+4. Editor creates or edits a page.
+5. On edit, Kaya stores prior content in page history before saving the new version.
+6. Page content is rendered through the custom Markdown-like renderer.
+
+## Settings
+
+No module-specific site settings identified.
+
+## Related Modules
+
+- Users/Roles
+- Audit Logs
+- Site Administration
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Markdown rendering is custom rather than a full Markdown library.
+- Version history exists, but full restore workflows are limited.

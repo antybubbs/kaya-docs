@@ -1,0 +1,62 @@
+﻿---
+title: "Module: Site Administration"
+description: "Developer documentation for Site Administration."
+order: 210
+version: "current"
+---
+
+## Overview
+
+Site Administration is the central admin area for settings, security, integrations, users, audit, import/export, custom fields and managed lists.
+
+## Features
+
+- User management.
+- 2FA reset.
+- Audit log viewing.
+- System/about information.
+- Site settings.
+- Security settings.
+- Email settings.
+- Remote Manager settings.
+- DNS Manager settings.
+- Backup settings.
+- Test actions.
+
+## Navigation
+
+Users access it from `/admin`, `/system/site-administration`, `/system/audit-logs`, `/system/about`, `/team/users`, `/data/import-export`, `/data/custom-fields` and `/data/categories`.
+
+## Permissions
+
+- Admin only for most pages.
+- Profile/security actions for the current user are separate from the admin pages.
+
+## Database
+
+Models: `User`, `AppSession`, `AuditLog`, `RemoteManagerSetting`, `DNSProviderConfig`, `CustomField`, `ManagedListItem`.
+
+## Workflows
+
+1. Admin manages users and roles.
+2. Admin manages settings through Site Administration.
+3. Secret values are encrypted before storage.
+4. Admin can test backup storage, DNS provider and email settings.
+5. Audit logs are filtered and reviewed from the system area.
+
+## Settings
+
+Settings include app identity and base URL, upload limits, security headers and trusted hosts, RDP token lifetime, Remote Manager / Guacamole, DNS Manager / Pi-hole provider, backup targets, SMTP and email templates.
+
+## Related Modules
+
+All modules depend on Site Administration for settings and permissions.
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- The admin router is large and mixes unrelated settings concerns.
+- Site settings are stored in `RemoteManagerSetting`, which now has broader meaning than its name suggests.

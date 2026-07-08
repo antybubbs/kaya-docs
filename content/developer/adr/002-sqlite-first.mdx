@@ -1,0 +1,31 @@
+﻿---
+title: "ADR 002: SQLite-first persistence"
+description: "Kaya defaults to SQLite for simple self-hosted deployment."
+order: 102
+version: "current"
+---
+
+## Decision
+
+Kaya defaults to SQLite for application persistence.
+
+## Context
+
+The target deployment is a small self-hosted environment where simple setup and predictable local persistence matter.
+
+## Reasoning
+
+SQLite avoids requiring a separate database service and works well for single-instance homelab and small business deployments.
+
+## Alternatives considered
+
+- PostgreSQL as the required database.
+- MySQL or MariaDB.
+- Embedded document storage.
+
+## Consequences
+
+- Deployment is simpler.
+- Backups can focus on the `data` volume.
+- Manual migrations are SQLite-oriented.
+- Multi-instance deployments need additional architecture work.

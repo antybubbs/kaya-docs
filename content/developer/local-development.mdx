@@ -1,17 +1,121 @@
----
-title: "Local Development"
-description: "Run Kaya Docs while developing."
-order: 4
+﻿---
+title: "Development Guide"
+description: "Run Kaya locally and contribute safely."
+order: 9
 version: "current"
 ---
 
-Install dependencies and start the development server:
+This page documents how to develop the Kaya application itself. For this docs application, see the repository README.
+
+## Repository structure
+
+| Path | Purpose |
+| --- | --- |
+| `app/main.py` | FastAPI application setup |
+| `app/routers/` | Route handlers grouped by module |
+| `app/services/` | Reusable business logic and integration code |
+| `app/models/models.py` | SQLAlchemy models |
+| `app/templates/` | Jinja templates |
+| `app/static/` | CSS, JavaScript and browser assets |
+| `scripts/` | Migration, demo and helper scripts |
+| `tests/` | Automated tests |
+
+## Running locally with Docker
+
+The normal development path is Docker Compose:
 
 ```bash
-npm install
-npm run dev
+docker compose up -d --build
 ```
 
-Open `http://localhost:3000`.
+Then open:
 
-Set `DOCS_AUTH_USERS` and `DOCS_AUTH_SECRET` in your environment when testing editor authentication.
+```text
+http://localhost:8080/setup
+```
+
+## Useful commands
+
+```bash
+make build
+make run
+make logs
+make shell
+```
+
+## Running without Docker
+
+Install Python dependencies and Node dependencies, then run Uvicorn against `app.main:app`.
+
+Local filesystem paths may need adjustment because defaults assume `/app/data` and `/app/uploads`.
+
+## Creating a new module
+
+1. Add SQLAlchemy models in `app/models/models.py`.
+2. Add additive migration logic in `app/main.py`.
+3. Add matching migration logic in `scripts/migrate_sqlite.py` if needed for container startup upgrades.
+4. Create a router in `app/routers`.
+5. Include the router in `app/main.py`.
+6. Add templates under `app/templates`.
+7. Add module JavaScript under `app/static/js` only if needed.
+8. Add navigation in `app/templates/base.html`.
+9. Apply `require_user`, `require_editor` or `require_admin`.
+10. Validate CSRF on mutating browser routes.
+11. Write audit events for sensitive actions.
+12. Add demo-mode restrictions for dangerous operations.
+13. Add tests.
+14. Update the relevant page in this Developer Documentation section.
+
+## Adding database models
+
+When adding or changing models:
+
+- Update `app/models/models.py`.
+- Add migration logic.
+- Consider indexes and uniqueness.
+- Update demo seed data where useful.
+- Update import/export if relevant.
+- Update [Database](/docs/developer/database).
+
+## Adding navigation
+
+Main app navigation is in `app/templates/base.html`.
+
+When adding navigation:
+
+- Use existing nav group patterns.
+- Keep labels consistent with page titles.
+- Avoid adding planned-only pages as live links unless they are visibly disabled.
+
+## Adding settings pages
+
+Site settings are currently stored in `remote_manager_settings`.
+
+When adding a setting:
+
+- Add a default in the relevant settings helper.
+- Add it to the admin save/load allow-list.
+- Validate and normalise form input.
+- Encrypt the value if it is secret.
+- Restart or refresh any service that depends on it.
+- Update [Site Administration](/docs/developer/modules/site-administration).
+
+## Adding templates
+
+Templates should extend the existing Jinja layout conventions and use the shared design system already present in the app.
+
+Prefer server-rendered HTML with focused JavaScript enhancement.
+
+## Coding patterns
+
+- Use SQLAlchemy sessions through `get_db`.
+- Use auth dependencies per route.
+- Validate CSRF on mutating form routes.
+- Write audit events for important actions.
+- Encrypt stored secrets with Fernet.
+- Use managed lists/custom fields for configurable user-facing categories where appropriate.
+- Keep static assets local.
+
+## Testing guidance
+
+Current test coverage is limited. New work should add focused tests for authentication and authorisation, demo-mode restrictions, migrations, file upload validation, import/export, agent APIs, provider parsing and security-sensitive workflows.

@@ -1,0 +1,45 @@
+﻿---
+title: "Release Process"
+description: "Current release and documentation update expectations."
+order: 12
+version: "current"
+---
+
+This page documents the current release expectations for Kaya and the developer documentation.
+
+## Versioning
+
+Kaya currently has an application version setting in `app/core/config.py`.
+
+Developer documentation pages use the MDX `version` frontmatter field. The current docs use `current`, matching the existing Kaya Docs convention.
+
+When Kaya publishes a concrete release version, update relevant documentation in the same change set.
+
+## Release workflow
+
+Current repository tooling includes a `make release VERSION=...` target that creates and pushes a Git tag.
+
+Before release:
+
+1. Review changed modules.
+2. Update matching Developer Documentation pages.
+3. Update database and security docs for schema/security changes.
+4. Run available tests.
+5. Build the Docker image.
+6. Tag the release.
+
+## Documentation updates
+
+Documentation should be updated with the code that changes behaviour.
+
+Use these routing rules:
+
+- Route/model/settings changes: update the relevant module page.
+- Schema changes: update [Database](/docs/developer/database).
+- Auth/security/upload/secret changes: update [Security](/docs/developer/security).
+- Agent/provider/API changes: update [API & Integrations](/docs/developer/api).
+- Operational/deployment changes: update [Deployment](/docs/developer/deployment).
+
+## Changelog process
+
+No dedicated changelog process was identified in the inspected Kaya application. Until one exists, release notes should be derived from merged changes and documentation updates.

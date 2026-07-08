@@ -1,0 +1,64 @@
+﻿---
+title: "Module: Remote Manager"
+description: "Developer documentation for Remote Manager."
+order: 203
+version: "current"
+---
+
+## Overview
+
+Remote Manager provides browser-based SSH and RDP access to configured hosts, plus session recording.
+
+## Features
+
+- Remote host list.
+- Per-host SSH/RDP settings.
+- Browser SSH.
+- Browser RDP through Guacamole.
+- RDP preflight checks.
+- Session recording.
+- Recording playback/download/delete.
+- Global remote settings.
+
+## Navigation
+
+Users access it from `/remote-manager`, `/remote-manager/settings`, `/remote-manager/recordings` and the Remote Manager sidebar group.
+
+## Permissions
+
+- Viewing and starting sessions requires authenticated user.
+- Per-host settings require editor.
+- Global settings and recording administration require admin.
+
+## Database
+
+Models: `RemoteAccess`, `IPAddress`, `RemoteManagerSetting`, `RemoteSessionRecording`, `User`.
+
+## Workflows
+
+1. IP records can be configured with remote access settings.
+2. Remote Manager lists enabled remote access records.
+3. User opens a session page.
+4. For SSH, Kaya proxies browser websocket traffic through the local Node SSH helper.
+5. For RDP, Kaya creates a short-lived token and uses the Node Guacamole bridge with guacd.
+6. Recording uploads are stored under `/app/data/remote-recordings`.
+
+## Settings
+
+Settings include Guacamole enablement, guacd host/port, split screen mode, idle timeout, recording controls, terminal preferences and RDP display/performance options.
+
+## Related Modules
+
+- VLAN/IP Manager
+- Site Administration
+- Audit Logs
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Remote credentials are not stored, but they pass through the application and helper services at connection time.
+- Recordings can contain sensitive information.
+- Node helper processes are managed by the web process.

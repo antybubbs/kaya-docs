@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 
@@ -32,7 +32,7 @@ const sectionTitles: Record<string, string> = {
   "getting-started": "Getting Started",
   "user-guide": "User Guide",
   administration: "Administration",
-  developer: "Developer",
+  developer: "Developer Documentation",
   troubleshooting: "Troubleshooting"
 };
 

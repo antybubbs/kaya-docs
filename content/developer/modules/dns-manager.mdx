@@ -1,0 +1,69 @@
+﻿---
+title: "Module: DNS Manager"
+description: "Developer documentation for DNS Manager."
+order: 205
+version: "current"
+---
+
+## Overview
+
+DNS Manager monitors and inspects DNS provider data. The current implemented provider is Pi-hole.
+
+## Features
+
+- Provider status and summary.
+- Query log.
+- Client inventory.
+- Local DNS display.
+- DHCP lease display.
+- Blocklist display.
+- Reports/investigations.
+- Query flagging.
+
+## Navigation
+
+Users access it from `/networking/dns-manager` in the Networking sidebar group.
+
+## Permissions
+
+- Viewing requires authenticated user.
+- Provider configuration is admin-only through Site Administration.
+- DNS investigation creation is available to authenticated users.
+
+## Database
+
+Models: `DNSProviderConfig`, `DNSInvestigation`, `RemoteManagerSetting`.
+
+## Workflows
+
+1. Admin enables DNS Manager and configures a Pi-hole provider.
+2. User opens DNS Manager.
+3. Kaya loads provider data through the DNS provider service.
+4. Tabs render dashboard, query log, clients, local DNS, DHCP, blocklists and reports.
+5. User can flag a query as an investigation.
+
+## Settings
+
+- `dns_manager_enabled`
+- `dns_default_provider_id`
+- Provider base URL
+- Auth method
+- Encrypted provider secret
+- SSL verification
+- Timeout
+
+## Related Modules
+
+- Networking
+- Site Administration
+- Audit Logs
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Only Pi-hole is currently implemented.
+- Pi-hole v6 and legacy fallback increase provider complexity.
+- API token auth is effectively legacy behaviour for Pi-hole.

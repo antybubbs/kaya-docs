@@ -1,0 +1,31 @@
+﻿---
+title: "ADR 001: FastAPI with server-rendered Jinja"
+description: "Kaya uses FastAPI and Jinja for the main application UI."
+order: 101
+version: "current"
+---
+
+## Decision
+
+Kaya uses FastAPI with server-rendered Jinja templates for the main web application.
+
+## Context
+
+Kaya needs authenticated CRUD workflows, forms, operational dashboards, settings pages and simple interactive enhancements.
+
+## Reasoning
+
+Server-rendered pages keep the application straightforward and reduce client-side complexity. FastAPI provides routing, dependency injection and async support where needed for websockets and integration endpoints.
+
+## Alternatives considered
+
+- Full SPA frontend.
+- Separate API and frontend applications.
+- Flask or Django.
+
+## Consequences
+
+- Most workflows are easy to trace from route to template.
+- JavaScript remains focused on enhancing pages.
+- Complex client-side interactions require careful module-specific JavaScript.
+- The application does not currently expose a broad public REST API.
