@@ -1,0 +1,31 @@
+﻿---
+title: "ADR 003: Database-backed settings"
+description: "Kaya stores many runtime settings in the database."
+order: 103
+version: "current"
+---
+
+## Decision
+
+Kaya stores many runtime settings in the database, primarily in `remote_manager_settings`.
+
+## Context
+
+Administrators need to change settings through the UI without editing environment files or rebuilding containers.
+
+## Reasoning
+
+Database-backed settings support the existing Site Administration workflow and allow settings to be changed from the web app.
+
+## Alternatives considered
+
+- Environment-only configuration.
+- Dedicated settings tables per module.
+- Static configuration files.
+
+## Consequences
+
+- Admin workflows are convenient.
+- Some settings can be changed without container restarts.
+- `RemoteManagerSetting` now stores more than remote settings and should eventually be renamed or replaced with a generic settings table.
+- Secret settings must be encrypted consistently.

@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 
@@ -29,10 +29,11 @@ export type NavItem = {
 export const contentRoot = path.resolve(process.env.DOCS_CONTENT_DIR ?? path.join(process.cwd(), "content"));
 
 const sectionTitles: Record<string, string> = {
+  home: "Home",
   "getting-started": "Getting Started",
   "user-guide": "User Guide",
   administration: "Administration",
-  developer: "Developer",
+  developer: "Developer Documentation",
   troubleshooting: "Troubleshooting"
 };
 
@@ -83,7 +84,8 @@ export function getAllDocs(): DocPage[] {
 }
 
 function sectionOrder(section: string) {
-  return ["getting-started", "user-guide", "administration", "developer", "troubleshooting"].indexOf(section);
+  const order = ["home", "getting-started", "user-guide", "administration", "developer", "troubleshooting"].indexOf(section);
+  return order === -1 ? Number.MAX_SAFE_INTEGER : order;
 }
 
 export function getDocBySlug(slugParts: string[] = []) {

@@ -1,0 +1,69 @@
+﻿---
+title: "Module: Docker / Compute Manager"
+description: "Developer documentation for VM/Docker Manager."
+order: 206
+version: "current"
+---
+
+## Overview
+
+The VM/Docker Manager monitors compute hosts and workloads from Proxmox and Docker agent sources.
+
+## Features
+
+- Compute host records.
+- Proxmox host sync.
+- Docker agent check-in.
+- Workload inventory.
+- Inventory items.
+- Metrics and events.
+- Workload detail pages.
+- Backup policy metadata.
+
+## Navigation
+
+Users access it from `/infrastructure/vm-docker-manager` in the Infrastructure sidebar group.
+
+## Permissions
+
+- Read requires authenticated user.
+- Host/workload changes require editor.
+- Agent API uses bearer token hash, not user session.
+
+## Database
+
+Models: `ComputeHost`, `ComputeWorkload`, `ComputeInventoryItem`, `ComputeMetric`, `ComputeEvent`, `IPAddress`.
+
+## Workflows
+
+1. Editor creates a Proxmox or Docker agent host.
+2. For Docker agent hosts, Kaya generates a one-time agent token.
+3. Proxmox hosts are synced by background polling or manual sync.
+4. Docker agent hosts send check-ins to the agent API.
+5. Kaya updates host, workload, inventory, metric and event rows.
+6. Workload detail pages link network context where addresses match IP records.
+
+## Settings
+
+- Host platform.
+- Base URL.
+- API token fields.
+- TLS verification.
+- Poll interval.
+- Owner and notes.
+
+## Related Modules
+
+- Backup Manager
+- Networking
+- Dashboard
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Direct Docker support exists in service code, while UI is focused on Docker agent and Proxmox.
+- Background polling can duplicate in multi-instance deployments.
+- Agent API security depends heavily on token secrecy.

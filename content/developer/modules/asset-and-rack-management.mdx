@@ -1,0 +1,64 @@
+﻿---
+title: "Module: Asset and Rack Management"
+description: "Developer documentation for hardware assets and racks."
+order: 208
+version: "current"
+---
+
+## Overview
+
+Asset and Rack Management tracks physical assets, uploaded asset files and rack layouts.
+
+## Features
+
+- Hardware asset records.
+- Asset photos.
+- Asset attachments.
+- Custom fields.
+- Managed categories, locations and statuses.
+- Rack records.
+- Rack item placement.
+- Front/rear/both-side mount positions.
+
+## Navigation
+
+Users access these pages from `/infrastructure/asset-manager`, `/infrastructure/rack-manager` and the Infrastructure sidebar group.
+
+## Permissions
+
+- Read requires authenticated user.
+- Changes require editor.
+
+## Database
+
+Models: `HardwareAsset`, `HardwareAssetAttachment`, `Rack`, `RackItem`, `CustomField`, `CustomFieldValue`, `ManagedListItem`.
+
+## Workflows
+
+1. Editor creates or edits hardware asset records.
+2. Optional photos and attachments are stored under the uploads directory.
+3. Admin-managed lists provide selectable asset categories, locations and statuses.
+4. Editor creates racks and rack items.
+5. Rack item placement validates U height and overlap.
+
+## Settings
+
+- `max_upload_mb`
+- Hardware asset managed lists
+- Hardware asset custom fields
+
+## Related Modules
+
+- Data Management
+- Site Administration
+- File uploads
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Attachments are less strictly validated than photos.
+- No malware scanning.
+- Rack delete support is not prominent in current routing.

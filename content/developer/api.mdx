@@ -1,17 +1,90 @@
----
-title: "API"
-description: "API notes for docs editing and search."
-order: 2
+﻿---
+title: "API & Integrations"
+description: "Current Kaya API-like surfaces and external integrations."
+order: 8
 version: "current"
 ---
 
-The docs app exposes internal API routes for editor workflows.
+Kaya is primarily a server-rendered web application. It does not currently expose a broad public REST API for normal UI operations.
 
-| Route | Purpose |
+The current API-like surface consists of health checks, agent endpoints, websocket endpoints, JSON helper routes, import/export contracts and provider integrations.
+
+## Health check
+
+| Endpoint | Purpose |
 | --- | --- |
-| `/api/search` | Returns a local documentation search index |
-| `/api/auth/login` | Starts an editor session |
-| `/api/auth/logout` | Ends the session |
-| `/api/docs` | Lists, creates, updates and deletes MDX files |
+| `GET /healthz` | Health response for container and reverse proxy checks |
 
-These routes are intended for the docs web app. Treat them as internal until an external API contract is designed.
+## Compute agent API
+
+The Docker/compute agent posts inventory and metrics to:
+
+- `POST /infrastructure/vm-docker-manager/api/agent/checkin`
+
+Authentication uses a bearer token. Kaya stores a SHA-256 hash of the agent token on the `ComputeHost` row.
+
+The endpoint updates host status, metrics, workloads, inventory items, events and agent last-seen metadata.
+
+## Backup agent API
+
+Backup agents poll and update jobs through:
+
+- `GET /infrastructure/backup-manager/api/agent/jobs`
+- `POST /infrastructure/backup-manager/api/agent/jobs/{job_id}/status`
+
+Authentication uses a bearer token tied to the compute host.
+
+Job dispatch can include decrypted backup target credentials and decrypted backup job encryption keys. Treat the backup agent channel as sensitive.
+
+## Remote Manager websockets
+
+Remote Manager uses websocket endpoints for browser sessions:
+
+- SSH websocket under `/remote-manager/{remote_id}/ssh/ws`
+- RDP websocket under `/remote-manager/{remote_id}/rdp/ws`
+
+These endpoints validate the user session and websocket origin. RDP startup uses short-lived in-memory tokens.
+
+## Pi-hole integration
+
+DNS Manager currently supports Pi-hole.
+
+The provider service supports Pi-hole v6 session-style authentication and legacy Pi-hole API fallback. Kaya reads provider status, summary stats, history, query log, network devices, local DNS hosts, DHCP leases and blocklists where available.
+
+## Email integration
+
+Kaya can send password reset emails through configured SMTP settings.
+
+Configuration includes host, port, TLS/SSL mode, username, encrypted password, from address, from name and reset email templates.
+
+## SSH integration
+
+Browser SSH sessions are proxied through a local Node helper service using the `ssh2` and `ws` packages.
+
+Remote passwords are not stored, but they pass through the application and helper service at connection time.
+
+## RDP integration
+
+RDP sessions use Kaya FastAPI route/session handling, the Node Guacamole bridge, guacd and a browser websocket session.
+
+RDP credentials are not stored. They are used to create a short-lived connection token.
+
+## Docker integration
+
+Kaya monitors Docker primarily through the Docker agent check-in model. Legacy direct Docker support exists in the compute monitor service code, but the current UI focuses on Docker agent and Proxmox host types.
+
+## NetBird integration
+
+No current NetBird integration was identified in the inspected Kaya application. Any future NetBird support should be documented here when implemented.
+
+## Import/export contracts
+
+Admin CSV import/export currently supports licences and IP addresses.
+
+Licence export includes decrypted product keys and should be handled as sensitive data.
+
+## Internal JSON helper routes
+
+Several modules expose JSON or partial-refresh endpoints for UI interactions, including compute summary updates, network monitor refresh/manual checks, IP ping checks, remote RDP preflight/start and Site Administration test actions.
+
+These are internal UI endpoints rather than a stable public API.

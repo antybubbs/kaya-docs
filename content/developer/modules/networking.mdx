@@ -1,0 +1,64 @@
+﻿---
+title: "Module: Networking"
+description: "Developer documentation for VLAN/IP, monitoring and domain modules."
+order: 204
+version: "current"
+---
+
+## Overview
+
+Networking covers VLAN/IP Manager, IP/WAN Monitor and Domain Manager. DNS Manager is documented separately.
+
+## Features
+
+- VLAN and IP address records.
+- IP categories and assignment types.
+- Ping checks.
+- Network monitor records and check history.
+- Domain registration tracking.
+- Domain lookup and polling.
+
+## Navigation
+
+Users access networking pages from `/networking/vlan-ip-manager`, `/networking/ip-wan-monitor`, `/networking/domain-manager` and the Networking sidebar group.
+
+## Permissions
+
+- Read requires authenticated user.
+- Changes require editor.
+- Ping and monitor refresh actions require authenticated user and CSRF where applicable.
+
+## Database
+
+Models: `VLAN`, `IPAddress`, `NetworkMonitor`, `NetworkMonitorCheck`, `RemoteAccess`, `DomainRecord`, `DomainRecordHistory`, `ManagedListItem`, `CustomField`, `CustomFieldValue`.
+
+## Workflows
+
+1. User creates or edits IP records.
+2. Editor can enable monitoring or remote access from the IP form.
+3. Monitor loop runs due checks and stores history.
+4. Domain records can be created and looked up manually.
+5. Domain polling checks due records in the background.
+
+## Settings
+
+- Domain poll cadence.
+- IP category managed lists.
+- Network monitor intervals and timeouts per monitor.
+
+## Related Modules
+
+- DNS Manager
+- Remote Manager
+- Compute Manager
+- Site Administration
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Some IP uniqueness logic treats addresses more globally than the database's per-VLAN uniqueness.
+- Ping depends on container/OS network capability.
+- Background polling runs in the web process.

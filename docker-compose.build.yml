@@ -1,0 +1,5 @@
+﻿services:
+  kaya-docs:
+    build: .
+    image: ${KAYA_DOCS_LOCAL_IMAGE:-kaya-docs}:${KAYA_DOCS_LOCAL_VERSION:-local}
+    pull_policy: never

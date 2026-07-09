@@ -1,0 +1,73 @@
+﻿---
+title: "Coding Standards"
+description: "Current Kaya project conventions and patterns."
+order: 10
+version: "current"
+---
+
+This page documents current project conventions. It describes how Kaya works today rather than imposing a new architecture.
+
+## Folder structure
+
+- Routers live in `app/routers/`.
+- Shared logic lives in `app/services/`.
+- SQLAlchemy models live in `app/models/models.py`.
+- Jinja templates live in `app/templates/`.
+- Static CSS and JavaScript live in `app/static/`.
+- Scripts live in `scripts/`.
+
+## Naming conventions
+
+- Router modules generally match feature/module names.
+- Database models use singular class names.
+- Database tables use plural snake_case names.
+- Template names usually match the feature or page purpose.
+- Static JavaScript files use snake_case module names.
+
+## Route organisation
+
+- Use FastAPI `APIRouter`.
+- Keep user-facing HTML routes in module routers.
+- Apply `require_user`, `require_editor` or `require_admin` directly on routes.
+- Validate CSRF on mutating browser routes.
+- Use bearer tokens for non-browser agent APIs.
+
+## Template structure
+
+- Extend the existing base layout conventions.
+- Prefer server-rendered HTML.
+- Use JavaScript as progressive enhancement.
+- Keep forms aligned with existing visual patterns.
+- Avoid creating isolated UI systems inside one module.
+
+## Service patterns
+
+- Put shared logic in `app/services/`.
+- Keep provider-specific code out of templates.
+- Use settings helpers for database-backed settings.
+- Use audit helpers for important state changes.
+- Keep background polling logic in services rather than route handlers.
+
+## Database patterns
+
+- Define models in `app/models/models.py`.
+- Use SQLAlchemy sessions from `get_db`.
+- Add manual migration logic for schema changes.
+- Keep model definitions and migration DDL aligned.
+- Use Fernet encryption for stored secrets.
+
+## Error handling
+
+- Form errors generally re-render templates with an error message.
+- API/helper endpoints return structured JSON where already established.
+- Audit logging is best-effort and should not take down a request on failure.
+
+## Logging and audit
+
+Security-sensitive and operationally important actions should write audit events.
+
+Audit categories and severities are derived by helper functions unless explicitly supplied.
+
+## Documentation standard
+
+When changing code, update the matching Developer Documentation page in the same change.

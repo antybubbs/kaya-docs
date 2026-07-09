@@ -1,0 +1,62 @@
+﻿---
+title: "Module: Licence Manager"
+description: "Developer documentation for Licence Manager."
+order: 209
+version: "current"
+---
+
+## Overview
+
+Licence Manager stores licence and product key information.
+
+## Features
+
+- Licence list/search/filter.
+- Favourite licences.
+- Encrypted product keys.
+- Product key reveal action.
+- Custom fields.
+- Managed licence type list.
+- CSV import/export.
+
+## Navigation
+
+Users access it from `/security/license-keys` in the Security sidebar group.
+
+## Permissions
+
+- Read requires authenticated user.
+- Create/edit/reveal requires editor.
+- Import/export requires admin.
+
+## Database
+
+Models: `Licence`, `CustomField`, `CustomFieldValue`, `ManagedListItem`.
+
+## Workflows
+
+1. Editor creates or edits licence records.
+2. Product keys are encrypted before storage.
+3. List view masks product keys.
+4. Editor can reveal a product key.
+5. Admin can import/export licence CSV.
+
+## Settings
+
+- Licence type managed list.
+- Licence custom fields.
+
+## Related Modules
+
+- Data Management
+- Audit Logs
+- Security
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Admin CSV export decrypts product keys into the exported file.
+- Product key reveal is audited but still exposes sensitive material to editors.

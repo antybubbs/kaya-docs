@@ -1,0 +1,68 @@
+﻿---
+title: "Module: Backup Manager"
+description: "Developer documentation for Backup Manager."
+order: 207
+version: "current"
+---
+
+## Overview
+
+Backup Manager tracks manual backup records and coordinates Docker workload backup/restore jobs through the Docker agent.
+
+## Features
+
+- Manual backup records.
+- Docker workload backup policies.
+- Backup job queueing.
+- Restore job queueing.
+- Agent job dispatch.
+- Job status updates.
+- Backup target settings.
+
+## Navigation
+
+Users access it from `/infrastructure/backup-manager` in the Infrastructure sidebar group.
+
+## Permissions
+
+- Viewing requires authenticated user.
+- Creating/queueing/changing requires editor.
+- Agent APIs use bearer token hash.
+
+## Database
+
+Models: `BackupRecord`, `BackupJob`, `ComputeHost`, `ComputeWorkload`, `RemoteManagerSetting`.
+
+## Workflows
+
+1. Admin configures backup targets in Site Administration.
+2. Editor creates manual backup records or configures Docker workload policies.
+3. Editor queues backup or restore jobs.
+4. Agent polls for jobs.
+5. Kaya dispatches queued jobs with target data and encrypted/decrypted job materials as needed.
+6. Agent posts status updates, logs, artifact paths and sizes.
+
+## Settings
+
+- Backup target JSON.
+- Default backup target.
+- Target type: local, SMB, FTP or SFTP-style configuration.
+- Remote credentials.
+- Per-workload backup target settings.
+
+## Related Modules
+
+- Docker / Compute Manager
+- Site Administration
+- Security
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Agents receive decrypted backup credentials and job encryption keys.
+- Backup target validation varies by target type.
+- Restore assumes the agent can access and interpret artifact paths.
+- Kaya's own database/upload backup is not fully handled by this module.

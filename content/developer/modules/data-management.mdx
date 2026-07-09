@@ -1,0 +1,60 @@
+﻿---
+title: "Module: Data Management"
+description: "Developer documentation for import/export, custom fields and managed lists."
+order: 211
+version: "current"
+---
+
+## Overview
+
+Data Management covers CSV import/export, custom fields, managed lists and file upload behaviour.
+
+## Features
+
+- CSV import/export for selected modules.
+- Custom fields for selected modules.
+- Managed lists/categories.
+- Upload handling for hardware assets and remote recordings.
+
+## Navigation
+
+Users access data management from `/data/import-export`, `/data/custom-fields`, `/data/categories` and the Data Management sidebar group.
+
+## Permissions
+
+- Import/export and list/field management require admin.
+- Module edit permissions control custom field values on records.
+
+## Database
+
+Models: `CustomField`, `CustomFieldValue`, `ManagedListItem`, `Licence`, `IPAddress`, `HardwareAsset`, `HardwareAssetAttachment`, `RemoteSessionRecording`.
+
+## Workflows
+
+1. Admin defines custom fields or managed list values.
+2. Supported modules render those fields/options in forms.
+3. Admin imports or exports supported CSV modules.
+4. Uploads are stored under configured persistent paths.
+
+## Settings
+
+- `max_upload_mb`
+- `max_recording_upload_mb`
+- `min_recording_free_mb`
+
+## Related Modules
+
+- Hardware Asset Manager
+- Licence Manager
+- VLAN/IP Manager
+- Remote Manager
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+- Import/export currently supports licences and IP addresses only.
+- Licence export includes decrypted product keys.
+- Custom field values use polymorphic references without database-level foreign keys.

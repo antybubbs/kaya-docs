@@ -1,0 +1,52 @@
+﻿---
+title: "Module: Dashboard"
+description: "Developer documentation for the Kaya Dashboard module."
+order: 201
+version: "current"
+---
+
+## Overview
+
+The Dashboard is the authenticated landing page for Kaya.
+
+## Features
+
+- Authenticated home page.
+- High-level operational entry point.
+- Compute summary context where available.
+
+## Navigation
+
+Users access it from `/dashboard`, the Dashboard sidebar link and post-login redirect flows.
+
+## Permissions
+
+Requires authenticated user.
+
+## Database
+
+Uses user/session context and compute summary data where available.
+
+## Workflows
+
+1. User signs in.
+2. Kaya validates the session.
+3. Dashboard route loads summary context.
+4. Template renders the dashboard.
+
+## Settings
+
+No module-specific settings identified.
+
+## Related Modules
+
+- Compute Manager
+- Site Administration
+
+## Screenshots
+
+No developer screenshots are currently stored for this module.
+
+## Known Limitations
+
+Dashboard usefulness depends on available module data and background compute polling.

@@ -1,0 +1,31 @@
+﻿---
+title: "ADR 004: Node helpers for browser remote access"
+description: "Kaya uses Node helper processes for SSH and Guacamole/RDP bridging."
+order: 104
+version: "current"
+---
+
+## Decision
+
+Kaya uses local Node.js helper processes for browser SSH and Guacamole/RDP websocket bridging.
+
+## Context
+
+Remote Manager needs interactive browser sessions for SSH and RDP while keeping credentials out of persistent storage.
+
+## Reasoning
+
+Existing Node packages provide practical SSH and Guacamole websocket handling. FastAPI coordinates authentication, permissions, settings and session tokens while the helper processes handle protocol bridging.
+
+## Alternatives considered
+
+- Implement SSH/RDP bridging entirely in Python.
+- Require users to open external clients.
+- Use an external remote access gateway only.
+
+## Consequences
+
+- Browser remote access is integrated into Kaya.
+- Node helper lifecycle is managed by the web process.
+- Credentials pass through the app/helper process at connection time.
+- Websocket origin and token checks are important security controls.
