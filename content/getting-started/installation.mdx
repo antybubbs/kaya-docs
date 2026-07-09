@@ -25,8 +25,10 @@ Use the latest release tag for stable installs. Use a branch only when testing u
 
 ## Before you begin
 
+If you know your way around Docker - 
+
 - A Linux host or virtual machine with Docker and Docker Compose installed.
-- Git installed on the host.
+- Git installed on the host. 
 - A DNS name if you plan to expose Kaya through HTTPS.
 - Persistent storage for `data/`, `uploads/` and remote recordings.
 
@@ -71,11 +73,13 @@ KAYA_IMAGE=kaya:main docker compose up -d
 Install from the current development branch:
 
 ```bash
-git clone --branch dev0.23.0 --single-branch https://github.com/antybubbs/Kaya.git kaya
+git clone --branch devxx.xx.xx --single-branch https://github.com/antybubbs/Kaya.git kaya
 cd kaya
-docker build -t kaya:dev0.23.0 .
-KAYA_IMAGE=kaya:dev0.23.0 docker compose up -d
+docker build -t kaya:devxx.xx.xx .
+KAYA_IMAGE=kaya:devxx.xx.xx docker compose up -d
 ```
+Please check the above branch before downloading, you will see the current dev branch on github
+
 
 ## Runtime configuration
 
@@ -88,7 +92,7 @@ Common Compose variables:
 | `BASE_URL` | `http://localhost:8080` | Public URL used by Kaya |
 | `ALLOWED_HOSTS` | empty | Additional trusted hostnames |
 | `SESSION_COOKIE_SECURE` | `false` | Set to `true` behind HTTPS |
-
+| `FORWARDED_ALLOW_IPS` | 127.0.0.1 | trusted reverse-proxy IPs or CIDR networks; defaults to `127.0.0.1` if not set |
 Kaya also stores generated runtime secrets in `data/.runtime.env` when they are not provided explicitly.
 
 ## Persistent data
