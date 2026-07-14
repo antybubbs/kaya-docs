@@ -32,18 +32,23 @@ export async function POST(request: Request) {
   if (!can(session?.role, "editor")) {
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
   }
-  const payload = await request.json();
-  const filePath = safeContentPath(payload.slug);
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  const frontmatter = {
-    title: payload.title || "Untitled",
-    description: payload.description || "",
-    order: Number(payload.order ?? 999),
-    version: payload.version || "current"
-  };
-  const raw = `---\n${yaml.dump(frontmatter, { lineWidth: 100 })}---\n\n${payload.body ?? ""}\n`;
-  fs.writeFileSync(filePath, raw, "utf8");
-  return NextResponse.json({ ok: true, slug: payload.slug });
+  try {
+    const payload = await request.json();
+    const filePath = safeContentPath(payload.slug);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    const frontmatter = {
+      title: payload.title || "Untitled",
+      description: payload.description || "",
+      order: Number(payload.order ?? 999),
+      version: payload.version || "current"
+    };
+    const raw = `---\n${yaml.dump(frontmatter, { lineWidth: 100 })}---\n\n${payload.body ?? ""}\n`;
+    fs.writeFileSync(filePath, raw, "utf8");
+    return NextResponse.json({ ok: true, slug: payload.slug });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to save documentation page.";
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
 }
 
 export async function PUT(request: Request) {

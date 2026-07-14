@@ -131,7 +131,7 @@ export function stripForSearch(source: string) {
 
 export function safeContentPath(slug: string) {
   const normalized = slug.replace(/\\/g, "/").replace(/^\/+/, "").replace(/\.mdx$/, "");
-  if (!/^[a-z0-9][a-z0-9/-]*$/.test(normalized) || normalized.includes("..")) {
+  if (!/^[A-Za-z0-9][A-Za-z0-9/-]*$/.test(normalized) || normalized.includes("..")) {
     throw new Error("Invalid documentation slug.");
   }
   const filePath = path.resolve(contentRoot, `${normalized}.mdx`);

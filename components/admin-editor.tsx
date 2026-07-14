@@ -80,7 +80,8 @@ export function AdminEditor({ initialUser }: { initialUser: User }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(draft)
     });
-    setMessage(response.ok ? "Saved to the content directory." : "Save failed.");
+    const payload = await response.json().catch(() => ({}));
+    setMessage(response.ok ? "Saved to the content directory." : payload.error ?? "Save failed.");
     if (response.ok) {
       const nextPages = pages.filter((page) => page.slug !== draft.slug).concat(draft).sort((a, b) => a.slug.localeCompare(b.slug));
       setPages(nextPages);
