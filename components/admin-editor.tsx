@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, FilePlus, LogOut, Save, Trash2, UserPlus } from "lucide-react";
+import { Eye, FilePlus, LogOut, Save, Search, Trash2, UserPlus } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 type User = { username: string; role: "viewer" | "editor" | "admin" } | null;
@@ -28,6 +28,7 @@ export function AdminEditor({ initialUser }: { initialUser: User }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [pages, setPages] = useState<PageRecord[]>([]);
+  const [pageQuery, setPageQuery] = useState("");
   const [selectedSlug, setSelectedSlug] = useState("");
   const [draft, setDraft] = useState<PageRecord>(emptyPage);
   const [message, setMessage] = useState("");
@@ -36,6 +37,13 @@ export function AdminEditor({ initialUser }: { initialUser: User }) {
   const [newUser, setNewUser] = useState({ username: "", password: "", role: "viewer" as ManagedUser["role"] });
 
   const selected = useMemo(() => pages.find((page) => page.slug === selectedSlug), [pages, selectedSlug]);
+  const filteredPages = useMemo(() => {
+    const query = pageQuery.trim().toLowerCase();
+    if (!query) return pages;
+    return pages.filter((page) =>
+      `${page.title} ${page.slug} ${page.description}`.toLowerCase().includes(query)
+    );
+  }, [pages, pageQuery]);
 
   useEffect(() => {
     if (!user) return;
@@ -184,16 +192,29 @@ export function AdminEditor({ initialUser }: { initialUser: User }) {
           </div>
           <button className="icon-button" onClick={logout} title="Sign out"><LogOut size={17} /></button>
         </div>
-        <button className="button button-secondary editor-wide-button" onClick={() => { setDraft(emptyPage); setSelectedSlug(""); }}>
+        <button className="button button-secondary editor-wide-button" onClick={() => { setDraft(emptyPage); setSelectedSlug(""); setPageQuery(""); }}>
           <FilePlus size={17} /> New page
         </button>
+        <div className="editor-page-search">
+          <Search aria-hidden="true" size={17} />
+          <input
+            aria-label="Search editor pages"
+            type="search"
+            value={pageQuery}
+            onChange={(event) => setPageQuery(event.target.value)}
+            placeholder="Search pages"
+          />
+        </div>
         <div className="editor-page-list">
-          {pages.map((page) => (
+          {filteredPages.map((page) => (
             <button key={page.slug} className={page.slug === draft.slug ? "active" : ""} onClick={() => setSelectedSlug(page.slug)}>
               <strong>{page.title}</strong>
               <span>{page.slug}</span>
             </button>
           ))}
+          {filteredPages.length === 0 && (
+            <p className="editor-page-empty" role="status">No pages match “{pageQuery.trim()}”.</p>
+          )}
         </div>
         {user.role === "admin" && (
           <div className="user-management">
