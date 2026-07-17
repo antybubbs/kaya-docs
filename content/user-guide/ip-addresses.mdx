@@ -1,17 +1,20 @@
 ---
-title: "IP Addresses"
-description: "Track IP allocations and network notes."
-order: 10
+title: "VLAN/IP Manager"
+description: "Manage VLAN-scoped IP records, DHCP ranges and related services."
+order: 7
 version: "current"
 ---
 
-The IP Addresses area is for documenting assigned, reserved and available addresses.
+Open **Networking > VLAN/IP Manager**. Managed records are organised by VLAN and Category; DNS observations remain separate until explicitly linked.
 
-Use it to reduce conflicts and keep network ownership visible.
+Any signed-in user can search, filter, view and ping records. Editors and Admins can create or edit an address with VLAN, MAC address, Category, display name, description, Static or Dynamic assignment, notes and configured custom fields. The same form can create or update the related reachability monitor and SSH/RDP Remote Manager record. Bulk update changes VLAN, Category or assignment type for selected rows.
 
-| Field | Purpose |
-| --- | --- |
-| Address | The IP address or range |
-| Status | Available, reserved or assigned |
-| Owner | Service, host or person responsible |
-| Notes | Operational context |
+Admins configure VLANs, Categories and multiple DHCP ranges under **Site Administration > Module Settings > VLAN/IP Manager**. Address uniqueness is scoped to a VLAN. DHCP ranges provide lease context; Kaya does not need placeholder records for every pool address.
+
+The **Observed DNS clients** view uses retained DNS data. Review a suggested match or create a managed record from observed values. Static records are never automatically moved by DNS observations; automatic Dynamic updates and exact-MAC linking are off by default.
+
+<Callout type="warning" title="Ping is a limited signal">
+A failed ICMP check may mean filtering or missing container capability rather than an unavailable device.
+</Callout>
+
+Related: [DNS Manager](/docs/user-guide/dns-manager), [IP/WAN Monitor](/docs/user-guide/network-monitor), [Remote Manager](/docs/user-guide/remote-manager).

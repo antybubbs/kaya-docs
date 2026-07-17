@@ -1,10 +1,14 @@
 ---
-title: "Network Monitor"
-description: "Monitor network status and connectivity."
-order: 8
+title: "IP/WAN Monitor"
+description: "Monitor IP reachability and interpret status and uptime cards."
+order: 10
 version: "current"
 ---
 
-Network Monitor gives operators a place to inspect connectivity and status signals.
+Open **Monitoring > IP/WAN Monitor**. Monitors are created from a VLAN/IP Manager record and contain a display name, interval and timeout.
 
-This page should explain what is checked, how often checks run, how failures are presented and where alerting is configured.
+The page shows current state, last check, response information and recent uptime calculated from stored checks. Any authenticated user can request a CSRF-protected manual refresh. A process-local background loop runs checks when they are due.
+
+ICMP depends on network routing, the target's firewall and the container's `NET_RAW` capability. Treat an Unknown or Down result as a diagnostic prompt, not immediate evidence of service failure. Multiple Kaya replicas can duplicate monitoring because there is no shared job coordinator.
+
+Related: [VLAN/IP Manager](/docs/user-guide/ip-addresses), [Module Not Loading](/docs/troubleshooting/module-not-loading).

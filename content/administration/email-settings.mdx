@@ -1,0 +1,18 @@
+---
+title: "Email Settings"
+description: "Configure SMTP and the current password-reset and Secure Send templates."
+order: 5
+version: "current"
+---
+
+### Email Settings
+
+Open **Site Administration > Email > General**. Configure SMTP host, port, username, password, From address/name and either STARTTLS or implicit SSL. The password is encrypted and is not displayed again. Do not enable STARTTLS and SSL together unless the interface explicitly accepts the intended combination.
+
+Enable SMTP, save, then send a test to a controlled address. A correct Base URL is required for links. The implementation uses SMTP for password resets and optional Secure Send delivery/lifecycle notifications.
+
+**Email Templates** currently contains password-reset and Secure Send subject/body templates. Use only the placeholders shown beside each editor; unsupported placeholders are not an extension mechanism. Branding can be included in HTML mail, while a plain-text alternative is always sent.
+
+Changing database email settings does not require a restart. Network, DNS, certificate or relay-policy changes outside Kaya may still be required.
+
+Related: [SMTP](/docs/integrations/smtp), [Email Not Sending](/docs/troubleshooting/email-not-sending).

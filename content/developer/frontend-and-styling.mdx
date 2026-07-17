@@ -1,0 +1,14 @@
+---
+title: "Frontend and Styling"
+description: "Work with Kaya's Jinja, local JavaScript, responsive CSS and PWA layer."
+order: 9
+version: "current"
+---
+
+### Frontend and Styling
+
+Kaya is server-rendered with Jinja2. `base.html` owns the global top bar, role-aware navigation, themes, PWA prompts and shared scripts. Module templates extend it and may load focused static assets.
+
+JavaScript enhances tables, inline editing, dashboard updates, racks, DNS, Remote Manager, settings tabs, Vault and Secure Send. Preserve working forms and navigation when JavaScript is unavailable where practical. Static dependencies are vendored locally rather than loaded from a CDN.
+
+CSS is split across application, branding, responsive, sidebar, remote and security-module files. Test Command and Light Ops themes, narrow screens, keyboard focus, dialogs, tables and long values. The service worker must never cache authenticated pages, API responses, uploads, WebSockets or mutations.

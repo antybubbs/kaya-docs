@@ -1,10 +1,18 @@
 ---
-title: "Racks"
-description: "Document rack layouts and mounted equipment."
-order: 11
+title: "Rack Manager"
+description: "Model racks and place equipment by rack unit and mount side."
+order: 3
 version: "current"
 ---
 
-Racks help map physical equipment to real locations.
+Open **Infrastructure > Rack Manager** to model equipment layouts. Viewers can inspect racks; Editors and Admins can change them.
 
-Include rack units, device placement, power notes and cabling references where the Kaya app supports them.
+Create a rack with a name, location, height from 1 to 100U, description and sort order. Open it to switch between front and rear views and add a device. A placement can link to an Asset Manager record or use a standalone name, and includes start unit, height, mount side (`front`, `rear` or `both`), category, colour and notes.
+
+Kaya rejects placements outside the rack or overlapping another item on the same visible side. It will not reduce rack height below the highest occupied unit. Layout changes made by dragging are validated by the server.
+
+<Callout type="danger" title="Rack deletion removes placements">
+Deleting a rack removes its rack-item layout records. It does not delete linked Asset Manager records, but the layout itself requires a backup to recover.
+</Callout>
+
+Related: [Asset Manager](/docs/user-guide/assets), [Permissions](/docs/administration/permissions).

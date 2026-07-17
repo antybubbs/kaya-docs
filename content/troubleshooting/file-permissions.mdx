@@ -1,0 +1,23 @@
+---
+title: "File Permissions"
+description: "Resolve write failures on Kaya's persistent bind mounts."
+order: 5
+version: "current"
+---
+
+Symptoms include startup failure, upload errors, missing recordings, Vault attachment errors or SQLite read-only messages.
+
+```bash
+docker compose ps
+docker compose logs --tail=200 kaya
+ls -ld data uploads data/secret-vault data/secure-send
+ls -la data | head
+```
+
+The container entrypoint runs as root briefly to prepare mounts, then runs Kaya as its system user. Secret Vault and Secure Send directories are expected to be private. Network filesystems, rootless Docker and inherited ACLs can change behaviour.
+
+Fix the specific host path and identity used by Docker; do not make the directory world-writable. Record current owner/mode first and keep a backup. After changes, recreate the container and test an upload plus database write.
+
+<Callout type="warning" title="Broad chmod is not a safe fix">
+Commands such as `chmod -R 777` expose the database, runtime encryption keys and private files. Determine the required UID/GID and grant only that access.
+</Callout>

@@ -1,0 +1,16 @@
+---
+title: "Data Management Administration"
+description: "Administer imports, custom fields and managed list values safely."
+order: 11
+version: "current"
+---
+
+### Data Management Administration
+
+The Admin-only **Data Management** group contains Import/Export, Custom Fields and Categories. **Duplication Check** and **System Backups** are displayed as Coming soon and are not active features.
+
+Import/export supports only IP addresses and licences. Licence export exposes decrypted keys. Custom fields support text, textarea, radio and select for IP addresses, assets and licences. Categories manages controlled values used by those modules.
+
+Back up before bulk imports or deleting definitions. Disabling or renaming a managed-list value does not rewrite existing record text. Deleting a custom field removes related values, and its polymorphic relationship is not protected by per-module database foreign keys.
+
+Related: [Import and Export](/docs/user-guide/import-export), [Custom Fields](/docs/user-guide/custom-fields), [Categories](/docs/user-guide/categories).

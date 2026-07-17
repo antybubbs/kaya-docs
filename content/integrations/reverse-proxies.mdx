@@ -1,0 +1,26 @@
+---
+title: "Reverse Proxies"
+description: "Publish Kaya through HTTPS with correct host, protocol and client-IP handling."
+order: 4
+version: "current"
+---
+
+Kaya can operate behind a conventional reverse proxy that preserves Host and supplies forwarding headers. The implementation is not tied to a particular proxy product.
+
+Forward HTTP and WebSocket traffic for the main interface to port `8080`. Publish Secure Send port `8999` separately if used. Preserve WebSocket upgrade headers for Remote Manager. Set the public Base URL, configure Allowed Hosts, and set `FORWARDED_ALLOW_IPS` to only the immediate proxy IP/CIDR.
+
+```nginx
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+```
+
+Use HTTPS, adequate upload/time-out limits and WebSocket support. Enable HSTS only after every required route is reliably HTTPS.
+
+<Callout type="danger" title="Redact Secure Send paths">
+Recipient URLs contain a bearer factor. Configure proxy, CDN, WAF and analytics logs to redact the token segment.
+</Callout>
+
+To remove the proxy, first disable HSTS where appropriate, ensure a direct Allowed Host and port are available, change Base URL and trusted-proxy environment, recreate Kaya, then remove routing.
+
+Related: [Trusted Proxies](/docs/administration/trusted-proxies), [Reverse Proxy Problems](/docs/troubleshooting/reverse-proxy-problems).

@@ -5,8 +5,6 @@ order: 1
 version: "current"
 ---
 
-## Kaya does not start after an update
-
 Check container logs first:
 
 ```bash
@@ -15,22 +13,22 @@ docker compose logs -f kaya
 
 If the failure happened during migration, confirm that `data/kaya.db` is present and restore from backup if needed.
 
-## I cannot log in after restore
+### I cannot log in after restore
 
 Confirm that the restored `data/` directory includes both `kaya.db` and `.runtime.env`. The session secret and encryption key must match the restored database.
 
-## Stored secrets show as decryption failures
+### Stored secrets show as decryption failures
 
 Kaya cannot decrypt stored values without the original encryption key. Restore the original `data/.runtime.env` or the environment-provided `ENCRYPTION_KEY` used when the data was created.
 
-## Ping or network checks fail
+### Ping or network checks fail
 
 The Docker Compose deployment grants `NET_RAW` so ICMP ping can work from the container. If checks still fail, confirm host firewall, container networking and the target device's ICMP policy.
 
-## Remote RDP sessions do not connect
+### Remote RDP sessions do not connect
 
 Confirm the `guacd` service is running and that Remote Manager settings point to the configured guacd host and port. Review Kaya logs and browser console output for token or websocket errors.
 
-## Password reset email does not send
+### Password reset email does not send
 
 Check SMTP settings in Site Administration, including host, port, TLS/SSL mode, username, password and from address. Use the test email action before relying on reset emails.

@@ -5,26 +5,26 @@ order: 2
 version: "current"
 ---
 
-## Where is Kaya data stored?
+### Where is Kaya data stored?
 
 In the Docker Compose deployment, Kaya stores persistent data in `./data`, uploaded files in `./uploads` and remote recordings in `./data/remote-recordings`.
 
-## What should I back up?
+### What should I back up?
 
 Back up `data/`, `uploads/` and `data/remote-recordings/`. Make sure `data/.runtime.env` is included because it stores the runtime encryption key when Kaya generates one automatically.
 
-## Can I install from a Git tag?
+### Can I install from a Git tag?
 
 Yes. The recommended stable source install is to check out the latest Kaya release tag and run the matching `ghcr.io/antybubbs/kaya:<tag>` image through Docker Compose.
 
-## Can I install from a branch?
+### Can I install from a branch?
 
 Yes. Branch installs are intended for development or testing unreleased work. Check out the branch, build a local Docker image and run Compose with `KAYA_IMAGE` pointing at that image.
 
-## Why does setup redirect me?
+### Why does setup redirect me?
 
 If no users exist, Kaya redirects login requests to `/setup` so the first administrator can be created.
 
-## Why is a secret unreadable after restore?
+### Why is a secret unreadable after restore?
 
 Encrypted values depend on the Fernet key stored in `data/.runtime.env` unless you supplied your own `ENCRYPTION_KEY`. Restoring the database without the matching key prevents Kaya from decrypting stored secrets.

@@ -1,0 +1,20 @@
+---
+title: "OpenID Connect"
+description: "Configure one standards-compatible identity provider without losing local recovery access."
+order: 3
+version: "current"
+---
+
+Kaya implements OIDC Authorization Code flow with PKCE and supports one active provider. Native LDAP and Active Directory binding are not implemented; use an OIDC-capable identity layer when those directories are the source.
+
+Use HTTPS, set Kaya's Base URL, create the exact callback ending `/auth/oidc/callback`, and keep a tested local TOTP-protected break-glass Admin. The provider must publish discovery metadata and asymmetrically signed ID-token keys; Kaya rejects symmetric ID-token signing.
+
+Configure issuer, client ID/secret, scopes including `openid`, TLS verification, claims and provisioning controls. Test discovery, then **Test login**, link an existing account and test logout. Only then choose preferred or required mode.
+
+Kaya can require verified email, constrain JIT domains, control email matching and map groups to roles. Role-sync and Admin mappings are high risk. Secret Vault step-up additionally requires recent `auth_time` and either an accepted `acr` or `amr` containing `mfa`.
+
+<Callout type="danger" title="Do not enable required mode first">
+An incorrect provider, proxy or logout configuration can lock users out. Verify `/auth/local` independently.
+</Callout>
+
+See [Configure authentik](/docs/integrations/authentik). To remove OIDC, switch to Local only, ensure users have local credentials, unlink identities, delete the provider, then revoke its client secret.

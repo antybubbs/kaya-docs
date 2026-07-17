@@ -1,0 +1,28 @@
+---
+title: "Module Settings"
+description: "Configure the current Dashboard, backup, DNS, networking, remote, Vault and Secure Send modules."
+order: 6
+version: "current"
+---
+
+### Module Settings
+
+Only Admin can change module settings.
+
+| Panel | Confirmed controls |
+| --- | --- |
+| Backup Manager | Named local, SMB, FTP and SFTP-style targets, default target, encrypted remote password and connection test |
+| Dashboard | Customisation, monitor mode, source age, required Attention widget, activity count 1–20 and disabled widget keys |
+| DNS Manager | Enablement, collector/cache, provider, 30–86,400 second refresh, client linking/retention and Pi-hole connection |
+| VLAN/IP Manager | VLANs, Categories and DHCP ranges with address/subnet validation |
+| Remote Manager | `guacd`, split screen, idle timeout, recording policy, terminal appearance and RDP redirection/performance |
+| Secret Vault | Minimum PIN 6–20, maximum auto-lock 5–60 minutes, sharing and OIDC MFA assurance |
+| Secure Send | Enablement, gateway origin, default/max expiry, package size, one-download, Vault handoff and email notices |
+
+DNS provider changes and most collector intervals are re-read without restart. Remote helper and network availability can still affect the result. Provider secrets and backup passwords are stored encrypted.
+
+<Callout type="warning" title="Test before relying on a setting">
+A saved target or provider is configuration, not proof of end-to-end operation. Use the available connection test, then run a small operational job and verify its result independently.
+</Callout>
+
+Module-specific guides explain effects and user workflows.

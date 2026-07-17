@@ -1,0 +1,23 @@
+---
+title: "Site Administration Overview"
+description: "Navigate Kaya's Admin-only system, authentication, email and module settings."
+order: 1
+version: "current"
+---
+
+### Site Administration Overview
+
+Only an active Admin can open **System Settings > Site Administration**. The current hierarchy is:
+
+- **General**, **Security** and **Uploads**;
+- **Authentication**: General, OpenID Connect, Claim & Role Mapping, Account Links;
+- **Email**: General and Email Templates;
+- **Module Settings**: Backup Manager, Dashboard, DNS Manager, VLAN/IP Manager, Remote Manager, Secret Vault and Secure Send.
+
+Admin-only navigation also includes **Team > Users**, **Data Management**, **Audit Logs** and **About Kaya**. Settings are primarily stored as database key/value rows, despite the historical internal table name `remote_manager_settings`.
+
+Most saved database settings take effect without a restart. Environment settings, Compose ports and bind mounts require a container recreate. Test buttons can make network or email connections and are restricted in demo mode.
+
+{/* TODO: Add screenshot of Site Administration with the left settings hierarchy visible. Obscure hostnames, email addresses and provider details. */}
+
+Related: [Users and Roles](/docs/administration/users-and-roles), [Module Settings](/docs/administration/module-settings), [Security](/docs/administration/security).

@@ -1,0 +1,16 @@
+---
+title: "Docker Agent"
+description: "Register the bearer-token integration used for Docker inventory and workload backup jobs."
+order: 7
+version: "current"
+---
+
+Kaya exposes authenticated agent endpoints for compute check-ins and backup jobs. The agent is not bundled as a service in the supplied Kaya Compose file, so follow the matching agent project's instructions where available.
+
+Create a Docker-agent host in **VM/Docker Manager** and copy the one-time token into the agent's protected configuration. Kaya stores only its SHA-256 hash. The agent posts inventory/metrics and polls backup jobs using the bearer token.
+
+Use HTTPS or a private network, restrict the token file, and give each host its own token. Backup job responses can include decrypted target credentials and job encryption keys, so the agent host is inside the backup trust boundary.
+
+If check-in fails, verify Kaya URL, host ID/token pairing, clock, TLS trust, proxy limits and agent log. A host can be online but lack backup controls if it did not advertise that capability.
+
+To remove it, stop the agent, delete/revoke its Kaya host after dependency review, and erase the token configuration.

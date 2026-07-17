@@ -1,0 +1,27 @@
+---
+title: "Initial Configuration"
+description: "Set the essential URL, security, backup and integration options after first login."
+order: 5
+version: "current"
+---
+
+Sign in as an Admin and open **System Settings > Site Administration**.
+
+### Essential checklist
+
+1. Under **General**, set the public Base URL. Password-reset, OIDC and Secure Send links depend on correct public addresses.
+2. Under **Security**, inspect the current-request check. Configure Allowed Hosts before enabling host restriction.
+3. If HTTPS is active, enable the HTTPS security options deliberately; enable HSTS only after HTTPS works reliably.
+4. Under **Uploads**, set a suitable maximum upload size.
+5. Under **Email**, configure and test SMTP if password reset or Secure Send email delivery is needed.
+6. Review every enabled **Module Settings** page. Pi-hole, Guacamole, backup targets, Secret Vault and Secure Send need environment-specific choices.
+7. Open **Team > Users** and create separate accounts rather than sharing the initial Admin account.
+8. Back up `data/` and `uploads/`, including hidden `data/.runtime.env`.
+
+Most database-backed settings are re-read while Kaya runs and do not require a restart. Environment variables such as `FORWARDED_ALLOW_IPS` require the container to be recreated.
+
+<Callout type="tip" title="Keep a recovery route">
+When configuring OIDC, retain and test an active local break-glass Admin before selecting OIDC-required mode.
+</Callout>
+
+Related: [Site Administration](/docs/administration/site-administration-overview), [Security](/docs/administration/security), and [Backing Up Kaya](/docs/getting-started/backing-up-kaya).

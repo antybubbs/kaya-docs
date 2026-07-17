@@ -1,0 +1,16 @@
+---
+title: "Migrations"
+description: "Evolve Kaya's SQLite schema with its current manual additive process."
+order: 11
+version: "current"
+---
+
+### Migrations
+
+Kaya does not use Alembic. Models live in `app/models/models.py`; table creation and manual SQLite evolution are split between application bootstrap and `scripts/migrate_sqlite.py`. The container entrypoint normally runs the script first and copies an existing database to `kaya.db.pre-migration`.
+
+Keep both migration paths idempotent and in sync. Prefer additive tables/columns/indexes, preserve data and defaults, and account for existing rows before adding constraints. Test an empty database, the latest schema and representative older copies.
+
+<Callout type="danger" title="Migration rollback is a data restore">
+Do not assume SQLite DDL can be reversed safely. Back up database, WAL/SHM state, runtime keys and related files; restore the pre-upgrade snapshot when rollback is required.
+</Callout>

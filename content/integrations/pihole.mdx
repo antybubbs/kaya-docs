@@ -1,0 +1,27 @@
+---
+title: "Pi-hole"
+description: "Connect Kaya DNS Manager to the currently implemented DNS provider."
+order: 1
+version: "current"
+---
+
+Pi-hole is the only DNS Manager provider currently implemented. Future integrations are being considered and tested.
+
+Kaya supports Pi-hole v6 session-style authentication and a legacy API fallback; exact compatibility depends on the endpoints exposed by the installed Pi-hole release.
+
+## Configure the provider
+
+1. In Pi-hole, create the least-privileged application credential that can read the required DNS information.
+2. In Kaya, open **Site Administration > Module Settings > DNS Manager**.
+3. Enable DNS Manager and, if required, the background collector.
+4. Enter a provider name, choose Pi-hole, enter the base URL, authentication method and credential, choose TLS verification and a 1–60 second timeout.
+5. Enable the provider, save, and run **Test provider**.
+6. Open DNS Manager and run an analysis. Confirm source time and available capabilities.
+
+Use HTTPS with a trusted certificate. Disabling certificate verification weakens server authentication. Kaya encrypts the saved credential but the running process remains within the trust boundary.
+
+401/403 indicates credential or API-mode mismatch. Certificate errors indicate a trust-chain or hostname problem. Partial tabs or unavailable insight rules can be a capability limitation.
+
+To remove the integration, disable collection/provider, remove the Kaya configuration, then revoke the credential in Pi-hole. Retained history remains until explicitly deleted or aged out.
+
+Related: [DNS Manager](/docs/user-guide/dns-manager), [Module Settings](/docs/administration/module-settings).

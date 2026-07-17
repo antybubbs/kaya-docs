@@ -1,0 +1,27 @@
+---
+title: "Repository Structure"
+description: "Find Kaya's application, templates, services, migrations, tests and deployment files."
+order: 2
+version: "current"
+---
+
+### Repository Structure
+
+```text
+app/
+  core/        configuration, security, CSRF, demo and performance helpers
+  db/          SQLAlchemy engine and session
+  models/      central SQLAlchemy model declarations
+  routers/     browser, JSON, agent and WebSocket route handlers
+  services/    collectors, providers and domain operations
+  templates/   Jinja2 pages and partials
+  static/      local CSS, JavaScript, PWA and vendored browser assets
+scripts/       SQLite migration, demo seed and recovery utilities
+tests/         pytest coverage
+docs/          application-source technical documentation
+demo/          public-demo reset support
+```
+
+`app/main.py` constructs the FastAPI application, installs middleware, includes routers and controls startup/shutdown work. `app/security_gateway.py` is the separate restricted Secure Send ASGI application. Deployment is defined by Dockerfile, Compose files and `docker-entrypoint.sh`.
+
+The separate `kaya-docs` repository is a Next.js MDX application. Do not place the full user guide in Kaya's internal `docs/` folder; keep source-level notes there and user-facing guides here.

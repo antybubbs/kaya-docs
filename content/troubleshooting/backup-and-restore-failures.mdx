@@ -1,0 +1,16 @@
+---
+title: "Backup and Restore Failures"
+description: "Diagnose Kaya system archives and agent-backed workload jobs."
+order: 11
+version: "current"
+---
+
+For a Kaya system archive, confirm it contains `data/.runtime.env`, `data/kaya.db`, encrypted storage, uploads and deployment configuration. An archive without the original encryption key is incomplete for encrypted features. Restore first to an isolated directory and inspect container migration logs.
+
+For Backup Manager jobs, inspect target connection test, agent last seen/capabilities, job state, log, artifact path and size. Queued means the agent has not accepted it; dispatched/running is not completion; failed requires the returned error. A restore needs a compatible artifact and the same backup encryption material supplied through the job.
+
+<Callout type="danger" title="Do not overwrite the only copy">
+Keep the failed source, current state and backup artifact unchanged. Do not delete volumes, prune Docker storage or rerun restore against production until the failure is understood.
+</Callout>
+
+Vault portable exports are separate: validate with the bundled offline tool and correct export passphrase. Tampered packages fail authenticated decryption.

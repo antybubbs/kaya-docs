@@ -1,0 +1,20 @@
+---
+title: "Secure Send"
+description: "Deliver temporary encrypted notes and files through Kaya's restricted gateway."
+order: 14
+version: "current"
+---
+
+Open **Security > Secure Send**. Admin or Editor can create a package when the module and gateway are enabled. Add an internal or external recipient, note and files, choose an allowed expiry and optional one-download, Vault handoff and notification settings.
+
+Kaya displays a generated ten-word passphrase once. Recipient access requires the high-entropy link, sender-selected PIN and passphrase. Send those factors through separate channels. SMTP can deliver the link but never includes the PIN or passphrase.
+
+The sender dashboard shows active, expired, revoked and deleted packages. A sender can extend within the Admin maximum, revoke access or delete a package. Expiry, revocation, deletion and one-download completion revoke recipient sessions; cleanup removes encrypted payload content while retaining minimal lifecycle metadata.
+
+Internal recipients see **Received** packages and may save an independent encrypted copy into an already-unlocked Secret Vault when permitted. Vault owners can start a send from a vault item.
+
+<Callout type="danger" title="Recipient URLs are sensitive">
+The URL is one access factor. Use HTTPS and configure every proxy, WAF and CDN to redact the 64-character token path from logs.
+</Callout>
+
+Secure Send is visible but non-functional in demo mode. Related: [Module Settings](/docs/administration/module-settings), [Reverse Proxies](/docs/integrations/reverse-proxies).

@@ -1,0 +1,14 @@
+---
+title: "Secure Send Module"
+description: "Understand temporary package encryption and the restricted recipient gateway."
+order: 13
+version: "current"
+---
+
+### Secure Send Module
+
+Authenticated sender/recipient-management routes live in `app/routers/secure_send.py`; encryption and lifecycle logic live in `app/services/secure_send.py`. `app/security_gateway.py` is a separate fail-closed FastAPI application with only exact recipient, download, logout, static and protected-health routes.
+
+Each package uses a random AES-256-GCM content key. Access combines the URL token, sender PIN and generated passphrase. File/note and recipient metadata are encrypted; credentials and sessions are represented by hashes or wrapped values. Expiry, revocation, deletion and one-download completion revoke sessions, while cleanup destroys payload ciphertext and retains minimal lifecycle data.
+
+The gateway shares the SQLite database, persistent application key and data mount but runs with `KAYA_GATEWAY_MODE=true`, skips migrations, disables Uvicorn access logs and applies restrictive headers/origin/method/body checks. Upstream infrastructure must redact URL tokens and provide HTTPS.

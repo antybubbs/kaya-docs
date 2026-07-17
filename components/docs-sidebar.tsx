@@ -7,7 +7,8 @@ import type { NavItem } from "@/lib/docs";
 export function DocsSidebar({ tree, currentSlug }: { tree: NavItem[]; currentSlug: string }) {
   return (
     <aside className="docs-sidebar" aria-label="Documentation navigation">
-      <h2>Docs</h2>
+      <span className="eyebrow">Kaya</span>
+      <h2>Documentation</h2>
       <ul className="docs-tree">
         {tree.map((node) => (
           <DocsNode key={node.href} node={node} currentSlug={currentSlug} />

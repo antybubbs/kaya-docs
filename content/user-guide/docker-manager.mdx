@@ -1,14 +1,20 @@
 ---
-title: "Docker Manager"
-description: "Review Docker workloads from Kaya."
+title: "VM/Docker Manager"
+description: "Monitor Proxmox and Docker hosts, workloads, inventory and metrics."
 order: 5
 version: "current"
 ---
 
-Docker Manager is for working with containerized services.
+Open **Infrastructure > VM/Docker Manager**. Kaya models a compute host and its discovered workloads, inventory, metrics and events.
 
-<Callout type="warning" title="Needs implementation detail">
-Add the exact actions supported by Kaya, such as viewing containers, inspecting Compose projects or controlling services.
+Editors and Admins can add a Proxmox host with API connection details or a Docker-agent host. Proxmox token secrets are encrypted at rest. A Docker-agent token is displayed when the host is created; the database stores its hash, so record the token securely for agent configuration. Host poll intervals are bounded by the form.
+
+Open a host to see connection state, last-seen time, resource values, workloads and inventory, then run a sync when the source supports it. Workload pages show status and resource details and allow owner, tags and backup-policy metadata to be maintained. Discovered addresses can link to VLAN/IP Manager records.
+
+<Callout type="info" title="Agent required for Docker">
+Adding a Docker host does not install or deploy an agent. The external agent must check in with the generated bearer token and report its capabilities.
 </Callout>
 
-Use this page to explain required host permissions, supported Docker endpoints and safe operating procedures.
+Viewer can read. Editor and Admin can manage hosts and workloads. Agent endpoints use bearer tokens rather than browser roles.
+
+Related: [Backup Manager](/docs/user-guide/backup-manager), [Docker Agent](/docs/integrations/docker-agent).

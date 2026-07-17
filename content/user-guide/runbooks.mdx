@@ -1,16 +1,16 @@
 ---
-title: "Runbooks"
-description: "Create repeatable operating procedures."
-order: 12
+title: "Runbook Manager"
+description: "Create searchable operational spaces and pages with change history."
+order: 11
 version: "current"
 ---
 
-Runbooks capture the steps operators follow during common tasks, maintenance and incidents.
+Open **Documentation > Runbook Manager**. Spaces organise pages for systems, teams or procedures. Pages support a title, tags and Markdown-like content, and may be nested beneath another page.
 
-## Useful runbook pattern
+Viewer can browse, search and filter pages by text, space and tags and switch between tile and table views. Editor and Admin can create spaces, add pages, edit content and delete pages. Kaya saves page history before an update, although the current interface does not provide a complete one-click history restore workflow.
 
-1. State when the runbook should be used.
-2. List prerequisites and access requirements.
-3. Provide numbered steps with commands where needed.
-4. Add rollback and verification steps.
-5. Link related services and assets.
+The renderer is Kaya's own limited Markdown-like implementation rather than a full CommonMark engine. Preview complex formatting and avoid relying on unsupported extensions.
+
+<Callout type="danger" title="Page deletion is permanent in the interface">
+Confirm the page and its operational value before using the Danger Zone. Restore requires an application backup or direct recovery work.
+</Callout>

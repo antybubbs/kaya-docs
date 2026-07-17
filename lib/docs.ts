@@ -33,6 +33,7 @@ const sectionTitles: Record<string, string> = {
   "getting-started": "Getting Started",
   "user-guide": "User Guide",
   administration: "Administration",
+  integrations: "Integrations",
   developer: "Developer Documentation",
   troubleshooting: "Troubleshooting"
 };
@@ -84,12 +85,12 @@ export function getAllDocs(): DocPage[] {
 }
 
 function sectionOrder(section: string) {
-  const order = ["home", "getting-started", "user-guide", "administration", "developer", "troubleshooting"].indexOf(section);
+  const order = ["home", "getting-started", "user-guide", "administration", "integrations", "developer", "troubleshooting"].indexOf(section);
   return order === -1 ? Number.MAX_SAFE_INTEGER : order;
 }
 
 export function getDocBySlug(slugParts: string[] = []) {
-  const slug = slugParts.join("/") || "getting-started/installation";
+  const slug = slugParts.join("/") || "getting-started/welcome-to-kaya";
   return getAllDocs().find((doc) => doc.slug === slug);
 }
 
@@ -131,7 +132,7 @@ export function stripForSearch(source: string) {
 
 export function safeContentPath(slug: string) {
   const normalized = slug.replace(/\\/g, "/").replace(/^\/+/, "").replace(/\.mdx$/, "");
-  if (!/^[a-z0-9][a-z0-9/-]*$/.test(normalized) || normalized.includes("..")) {
+  if (!/^[A-Za-z0-9][A-Za-z0-9/-]*$/.test(normalized) || normalized.includes("..")) {
     throw new Error("Invalid documentation slug.");
   }
   const filePath = path.resolve(contentRoot, `${normalized}.mdx`);

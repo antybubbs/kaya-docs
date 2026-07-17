@@ -1,0 +1,18 @@
+---
+title: "Proxmox"
+description: "Connect VM/Docker Manager to a Proxmox API endpoint."
+order: 6
+version: "current"
+---
+
+Editors and Admins add a Proxmox host in **Infrastructure > VM/Docker Manager**. Kaya polls the API to retain host, workload, inventory and metric information.
+
+Create a dedicated Proxmox API token with read access to the intended scope. Enter the endpoint and token identity/secret in Kaya, choose a bounded polling interval and test/sync the host. The token secret is encrypted at rest.
+
+Use a trusted TLS certificate and network ACLs limiting API access. A successful host save does not prove every node or workload is visible; compare inventory with the token's Proxmox scope.
+
+<Callout type="danger" title="Host deletion removes retained compute data">
+Kaya deletes related workloads, metrics, inventory, events and backup jobs for that host. Back up Kaya and review dependencies first. Kaya does not delete content on your Proxmox host, only locally!
+</Callout>
+
+To remove the integration, delete the compute host after review, then revoke the API token in Proxmox.

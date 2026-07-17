@@ -1,0 +1,24 @@
+---
+title: "Installation Problems"
+description: "Diagnose clone, image, port and first-start failures."
+order: 1
+version: "current"
+---
+
+### Checks
+
+```bash
+docker --version
+docker compose version
+docker compose config
+docker compose pull
+docker compose up -d
+docker compose ps
+docker compose logs --tail=200 kaya
+```
+
+An image pull error normally indicates registry/network/authentication or an invalid tag. `address already in use` means port 8080 or 8999 conflicts; set `KAYA_PORT` or `KAYA_SECURE_SEND_PORT` in `.env`. A bind-mount permission error means Docker cannot create/write `data/` or `uploads/` on the host.
+
+On first start, expect secret initialisation and migration messages followed by Uvicorn. Test `curl --fail http://127.0.0.1:8080/healthz`. If health works but the browser does not, investigate host firewall, published ports, Allowed Hosts and proxy configuration.
+
+Do not delete `data/` to retry; it may already contain persistent keys or a database. See [Container Will Not Start](/docs/troubleshooting/container-will-not-start).

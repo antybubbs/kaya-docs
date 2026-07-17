@@ -1,10 +1,18 @@
 ---
 title: "Domain Manager"
-description: "Document domains, DNS and related ownership."
+description: "Track domain ownership, expiry, nameservers and lookup history."
 order: 9
 version: "current"
 ---
 
-Use Domain Manager to record domains, DNS notes, renewal information and ownership details.
+Open **Networking > Domain Manager**. Viewers can inspect records; Editors and Admins can create, edit, look up and delete them.
 
-Add process guidance for renewals, registrar access and reverse proxy updates once the exact Kaya fields are confirmed.
+Create a record with the domain name and operational metadata. Kaya's lookup services can collect registrar, expiry, nameserver and DNS information and retain changes in history. A background poller refreshes due records; manual lookup requests an immediate refresh.
+
+External RDAP, WHOIS and DNS responses vary by registry and TLD. A blank or failed field is not proof that the domain lacks that property. Review the stored error and retry before changing the record manually.
+
+<Callout type="danger" title="Deletion removes local history">
+Deleting a domain record removes Kaya's record and associated lookup history; it does not alter the registration at the registrar.
+</Callout>
+
+Related: [Module Settings](/docs/administration/module-settings), [Collecting Support Information](/docs/troubleshooting/collecting-support-information).

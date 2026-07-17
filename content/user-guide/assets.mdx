@@ -1,12 +1,21 @@
 ---
-title: "Assets"
-description: "Manage physical and logical infrastructure assets."
-order: 3
+title: "Asset Manager"
+description: "Record physical assets, photos, attachments and custom information."
+order: 2
 version: "current"
 ---
 
-Assets are inventory records for the equipment, systems or resources your team needs to operate.
 
-Use asset records to capture identity, ownership, location, support status and related documentation.
+Asset Manager tracks physical devices and their files. Open **Infrastructure > Asset Manager**.
 
-This page needs the exact fields, filters and lifecycle behavior from Kaya.
+Any signed-in user can browse, search and filter assets. An Editor or Admin can select **Add Asset**, enter the name and managed category, location and status values, add serial, manufacturer, model, purchase, warranty, network and notes information, then save. Custom fields configured by an Admin appear on the form.
+
+On an asset detail page, Editors can update the record, upload a recognised image as its photo, attach supporting files, download attachments or use the Danger Zone to delete the asset. Deleting an asset also removes its attachment records and stored files and can affect a rack placement linked to that asset.
+
+<Callout type="warning" title="Treat attachments as untrusted">
+Kaya validates photos more strictly than general attachments and does not perform malware scanning. Only open files from trusted users.
+</Callout>
+
+Viewer can read and download. Editor and Admin can create, edit, upload and delete. The global upload limit applies. Categories, locations, statuses and custom fields are Admin-managed.
+
+Related: [Rack Manager](/docs/user-guide/racks), [Custom Fields](/docs/user-guide/custom-fields).

@@ -1,21 +1,29 @@
 ---
 title: "First Login"
-description: "Complete the first sign-in and initial setup."
-order: 2
+description: "Create the initial administrator and sign in safely."
+order: 4
 version: "current"
 ---
 
-After installation, open Kaya in a browser and sign in with the configured bootstrap account.
+When Kaya has no users, `/login` redirects to `/setup`. The setup form creates the first active Admin account; normal user registration is not available.
 
-<Callout type="info" title="Recommended first checks">
-Change default credentials, verify the public URL, check storage paths and confirm that background services are healthy.
+### Create the administrator
+
+1. Open `http://SERVER-IP:8080/setup`.
+2. Enter the administrator's name, email address and a unique password of at least 12 characters.
+3. Submit the form, then sign in at `/login`.
+4. Confirm that the Dashboard and Admin-only navigation groups are visible.
+
+Kaya stores passwords as Argon2 hashes. Login attempts are rate-limited in memory. Sessions use a signed, Strict SameSite cookie and a database activity record.
+
+<Callout type="warning" title="Use HTTPS before wider access">
+Direct HTTP is acceptable for an isolated first-run check. Configure HTTPS and the secure-session setting before exposing Kaya beyond a trusted network.
 </Callout>
 
-## Initial setup checklist
+### Enable two-factor authentication
 
-- Create or confirm the first admin user.
-- Add editor or viewer accounts for the operators who need access.
-- Review system settings before adding infrastructure records.
-- Confirm that audit logging is enabled if your deployment requires traceability.
+Open the avatar menu, select **Profile Settings**, then use the security controls to enrol a TOTP authenticator. Save any recovery information outside Kaya. Secret Vault requires Kaya TOTP or a correctly configured OIDC MFA step-up.
 
-This page needs the exact first-run screens and default credential behavior from the Kaya application.
+{/* TODO: Add screenshot of the initial setup form with fictional details and the password obscured. */}
+
+Next, complete [Initial Configuration](/docs/getting-started/initial-configuration).

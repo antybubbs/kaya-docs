@@ -16,16 +16,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d0f13"
+  themeColor: "#0b0e13"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <div className="site-canvas" aria-hidden="true" />
         <div className="page-shell">
           <SiteHeader />
-          <main>{children}</main>
+          <main id="main-content" tabIndex={-1}>{children}</main>
           <SiteFooter />
         </div>
       </body>

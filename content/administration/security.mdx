@@ -1,12 +1,20 @@
 ---
 title: "Security"
-description: "Secure Kaya deployments and access."
-order: 4
+description: "Harden hosts, cookies, headers, encrypted data and high-risk modules."
+order: 9
 version: "current"
 ---
 
-Security guidance should include authentication, role assignment, reverse proxy hardening, secret management and backup protection.
+### Security
 
-<Callout type="danger" title="Production reminder">
-Change default credentials and secrets before exposing Kaya beyond a trusted local network.
+Open **Site Administration > Security**. Configure trusted-host enforcement only after entering every required hostname/IP. Choose the frame-ancestor policy and optional sources, enable HSTS only after HTTPS works, and set the RDP token lifetime between 5 and 60 minutes.
+
+The current-request checks help verify allowed host, inbound DNS, outbound public IP, framing, HSTS and effective client/proxy state. Some tests use external DNS or public-IP services and can fail because of network policy.
+
+Kaya hashes passwords with Argon2, encrypts stored operational secrets, applies Strict SameSite session cookies, validates CSRF on browser mutations and writes audit records. It is still the operator's responsibility to use HTTPS, protect bind mounts and backups, patch images, limit Admin roles and segment management traffic.
+
+<Callout type="danger" title="Preserve the persistent encryption key">
+Do not rotate or replace `data/.runtime.env` by hand. Losing its `ENCRYPTION_KEY` can make stored credentials, Vault and Secure Send data unrecoverable.
 </Callout>
+
+Current limitations include in-memory rate limits, coarse route-level RBAC, no general malware scanner and background tasks within the web process.
