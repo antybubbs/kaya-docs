@@ -13,7 +13,7 @@ export function SiteHeader() {
   return (
     <header className={`site-header ${isOpen ? "nav-open" : ""}`}>
       <div className="container header-inner">
-        <Link className="brand brand-compact" href="/docs/getting-started/welcome-to-kaya" aria-label="Kaya Docs home">
+        <Link className="brand brand-compact" href="/docs/home/welcome" aria-label="Kaya Docs home">
           <img src="/brand/kaya-logo-exact.png" alt="Kaya" />
         </Link>
         <button
@@ -32,7 +32,6 @@ export function SiteHeader() {
             <Link className="nav-link" href="/docs/home/welcome" aria-current={pathname.startsWith("/docs/home/welcome") ? "page" : undefined}>Docs</Link>
             <Link className="nav-link" href="/docs/user-guide/dashboard" aria-current={pathname.startsWith("/docs/user-guide") ? "page" : undefined}>User Guide</Link>
             <Link className="nav-link" href="/docs/developer/architecture" aria-current={pathname.startsWith("/docs/developer") ? "page" : undefined}>Developer</Link>
-            <Link className="button button-primary nav-cta" href="/admin">Editor</Link>
           </nav>
         </div>
       </div>
