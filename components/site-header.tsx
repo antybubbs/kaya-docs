@@ -29,7 +29,7 @@ export function SiteHeader() {
         <div className="header-tools" id="site-navigation">
           <SearchBox />
           <nav className="site-nav" aria-label="Main navigation">
-            <Link className="nav-link" href="/docs/getting-started/welcome-to-kaya" aria-current={pathname.startsWith("/docs/getting-started") ? "page" : undefined}>Docs</Link>
+            <Link className="nav-link" href="/docs/home/welcome" aria-current={pathname.startsWith("/docs/home/welcome") ? "page" : undefined}>Docs</Link>
             <Link className="nav-link" href="/docs/user-guide/dashboard" aria-current={pathname.startsWith("/docs/user-guide") ? "page" : undefined}>User Guide</Link>
             <Link className="nav-link" href="/docs/developer/architecture" aria-current={pathname.startsWith("/docs/developer") ? "page" : undefined}>Developer</Link>
             <Link className="button button-primary nav-cta" href="/admin">Editor</Link>
