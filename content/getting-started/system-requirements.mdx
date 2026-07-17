@@ -1,0 +1,49 @@
+---
+title: "System Requirements"
+description: "Prepare a host, storage, network and browser for Kaya."
+order: 3
+version: "current"
+---
+
+# System Requirements
+
+## Required software
+
+- A Linux host capable of running Linux containers.
+- Docker Engine and the Docker Compose v2 plug-in (`docker compose`).
+- Git when installing from the repository.
+- A current desktop or mobile browser with JavaScript and cookies enabled.
+
+Verify the host before continuing:
+
+```bash
+docker --version
+docker compose version
+git --version
+```
+
+## Storage
+
+Kaya needs persistent, writable storage for `data/` and `uploads/`. The `data/` directory contains the SQLite database, generated runtime secrets, Secret Vault and Secure Send ciphertext, remote recordings and migration backup. Do not place it on ephemeral container storage.
+
+No fixed CPU, memory or disk minimum is enforced in code. Capacity depends on record volume, uploads, recordings, DNS history and compute metrics. Start with several gigabytes of free disk space and monitor growth. Remote recordings and retained DNS data usually grow fastest.
+
+## Network access
+
+The standard Compose deployment publishes:
+
+- TCP `8080` for the Kaya interface;
+- TCP `8999` for the separate Secure Send recipient gateway;
+- an internal connection to `guacd` on TCP `4822` for RDP.
+
+ICMP monitoring requires the `NET_RAW` capability included in the supplied Compose file. Proxmox, Docker agents, Pi-hole, SMTP, OIDC, RDAP/WHOIS/DNS and remote-session targets also need appropriate outbound or internal connectivity when configured.
+
+<Callout type="tip" title="Expose only what is needed">
+Keep the main interface private where possible. If Secure Send is used externally, publish its gateway through HTTPS without exposing Kaya's authenticated interface to the same audience.
+</Callout>
+
+## Deployment model
+
+The code starts background collectors and helper processes inside the web application. Run one Kaya application replica; multiple independent replicas can duplicate polling and background work.
+
+Continue with [Installing Kaya](/docs/getting-started/installing-kaya).

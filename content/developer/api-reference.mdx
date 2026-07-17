@@ -1,0 +1,20 @@
+---
+title: "API Reference"
+description: "Locate Kaya's internal agent, WebSocket, health and helper endpoints."
+order: 12
+version: "current"
+---
+
+# API Reference
+
+Kaya does not expose a broad stable public REST API for ordinary records. The implemented integration surface includes:
+
+- `GET /healthz`;
+- Docker-agent check-in under VM/Docker Manager;
+- backup-agent job poll/status endpoints;
+- SSH and RDP WebSockets plus RDP preflight/start helpers;
+- internal JSON/partial-refresh endpoints;
+- Admin CSV contracts for IP addresses and licences;
+- the restricted Secure Send recipient gateway.
+
+Agent endpoints use bearer tokens and are operationally sensitive. Browser helper endpoints remain internal UI contracts and can change. See the detailed [API and Integration Surface](/docs/developer/api) for current route shapes and cautions.

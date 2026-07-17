@@ -88,3 +88,7 @@ Licence export includes decrypted product keys and should be handled as sensitiv
 Several modules expose JSON or partial-refresh endpoints for UI interactions, including compute summary updates, network monitor refresh/manual checks, IP ping checks, remote RDP preflight/start and Site Administration test actions.
 
 These are internal UI endpoints rather than a stable public API.
+
+## Secure Send gateway
+
+The separate gateway exposes only recipient unlock/download/logout, three static assets and a protected health route on its configured origin. It intentionally does not expose Kaya login, administration, ordinary static files or numeric package identifiers. Unknown or malformed routes fail closed with a generic response. Treat the 64-character URL token as one authentication factor and redact it from upstream logs.

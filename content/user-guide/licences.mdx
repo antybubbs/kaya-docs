@@ -1,10 +1,18 @@
 ---
-title: "Licences"
-description: "Track software licences and renewals."
-order: 13
+title: "License Keys"
+description: "Store, mask and audit access to software licence keys."
+order: 12
 version: "current"
 ---
 
-Use Licences to record entitlement, renewal dates, purchase notes and ownership.
+# License Keys
 
-This page needs the exact spelling and fields used by the Kaya module.
+Open **Security > License Keys**. The interface uses the spelling **License Keys**, while internal model and import names use `licences`.
+
+Viewer can browse and see masked keys. Editor and Admin can add a product, required key, managed licence type, seat count, favourite state, notes and custom fields. Product keys are encrypted at rest. Revealing a full key requires Editor or Admin and writes an audit event.
+
+<Callout type="warning" title="CSV export exposes plaintext keys">
+Admin import/export can decrypt product keys into the exported file. Handle the CSV as a secret, transmit it securely and delete working copies when they are no longer required.
+</Callout>
+
+Related: [Import and Export](/docs/user-guide/import-export), [Audit Logs](/docs/administration/audit-and-logging).

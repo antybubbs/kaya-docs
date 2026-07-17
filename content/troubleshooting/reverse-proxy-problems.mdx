@@ -1,0 +1,21 @@
+---
+title: "Reverse Proxy Problems"
+description: "Diagnose bad redirects, WebSocket failures, host rejection and upload limits."
+order: 6
+version: "current"
+---
+
+# Reverse Proxy Problems
+
+Test the application directly from the proxy host, then through the public URL:
+
+```bash
+curl -i http://127.0.0.1:8080/healthz
+curl -I https://kaya.example.com/login
+```
+
+Redirects to an internal URL point to an incorrect Base URL or forwarded protocol. `400` host failures point to Allowed Hosts. Wrong client IP or non-secure URL detection points to `FORWARDED_ALLOW_IPS`. SSH/RDP connection failure only through the proxy often means missing WebSocket Upgrade handling or timeouts. Upload failures may be proxy body-size limits below Kaya's configured value.
+
+Verify Host, `X-Forwarded-For` and `X-Forwarded-Proto`; allow WebSockets; and compare the Site Administration current-request panel. Do not trust wildcard proxy peers to make the warning disappear.
+
+See [Reverse Proxies](/docs/integrations/reverse-proxies) and [Trusted Proxy Problems](/docs/troubleshooting/trusted-proxy-problems).

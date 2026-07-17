@@ -1,0 +1,20 @@
+---
+title: "Cannot Log In"
+description: "Recover from local, TOTP, session and OIDC sign-in failures."
+order: 3
+version: "current"
+---
+
+# Cannot Log In
+
+Confirm the exact URL, email address and account status. Private browsing can exclude stale cookies. Repeated failures may trigger the process-local rate limiter; wait and avoid automated retries.
+
+For local login, Admin can verify the account is active and reset TOTP from **Team > Users** after independently confirming identity. Password reset requires working SMTP and a correct Base URL.
+
+For OIDC, compare the issuer and callback exactly, test discovery, verify TLS/time/DNS, and inspect the provider's login event. A verified-email or allowed-domain policy can reject an otherwise valid identity. Account linking is based on controlled identity records, not an assumption that matching email is always safe.
+
+If OIDC is required, use `/auth/local` only when emergency access is enabled and the account is active, Admin, local-password capable, marked break-glass and passes TOTP where enabled.
+
+<Callout type="danger" title="Do not edit password hashes or identity rows casually">
+Direct database edits can remove the last recovery path or invalidate auditability. Restore a known backup or obtain project-owner guidance if no tested Admin remains.
+</Callout>

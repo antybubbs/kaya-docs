@@ -1,0 +1,40 @@
+---
+title: "Restoring Kaya"
+description: "Restore a complete Kaya backup without replacing the persistent encryption key."
+order: 8
+version: "current"
+---
+
+# Restoring Kaya
+
+Restore into an isolated test location first whenever possible. Use a backup from a compatible Kaya version and preserve its original `data/.runtime.env`.
+
+<Callout type="danger" title="Restore overwrites current state">
+Stop Kaya, take a separate copy of the current `data/` and `uploads/` directories, and verify the backup archive before replacing anything.
+</Callout>
+
+## Restore a cold backup
+
+```bash
+cd /path/to/kaya
+docker compose down
+mv data data.before-restore
+mv uploads uploads.before-restore
+tar --extract --gzip --file /safe/path/kaya-backup-YYYY-MM-DD-HHMMSS.tar.gz
+docker compose pull
+docker compose up -d
+docker compose logs --tail=150 kaya
+```
+
+The entrypoint runs current additive SQLite migrations and normally creates `data/kaya.db.pre-migration` before changing an existing database.
+
+## Validate the restore
+
+1. Confirm `/healthz` returns successfully.
+2. Sign in with a known Admin account.
+3. Check assets and uploads, audit logs, module settings and recent records.
+4. Test a stored encrypted setting without changing it.
+5. Unlock a Secret Vault and verify an attachment when applicable.
+6. Confirm Secure Send packages obey their stored expiry; restoring an older backup does not bypass expiry checks.
+
+If encrypted values fail after restore, stop. Do not generate a new encryption key over the restored database. Locate the original `.runtime.env` or recover Secret Vault content from a portable `.kayavault` export.

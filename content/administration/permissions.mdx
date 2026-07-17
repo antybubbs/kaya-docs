@@ -1,0 +1,24 @@
+---
+title: "Permissions"
+description: "Understand Kaya's route-level Viewer, Editor and Admin controls."
+order: 3
+version: "current"
+---
+
+# Permissions
+
+Kaya applies coarse route-level roles rather than configurable per-object permissions.
+
+| Capability | Viewer | Editor | Admin |
+| --- | --- | --- | --- |
+| Read authenticated operational modules | Yes | Yes | Yes |
+| Create, edit and delete operational records | No | Yes | Yes |
+| Create Secure Send packages | No | Yes | Yes |
+| Reveal a full licence key | No | Yes | Yes |
+| Manage users, settings, lists and imports | No | No | Yes |
+| View Audit Logs and Remote recordings | No | No | Yes |
+| Open another user's private Secret Vault | No | No | No |
+
+Some safe actions, including IP ping and manual network-monitor refresh, are available to any authenticated user. Compute and backup agent endpoints use their own bearer tokens. Secure Send recipient access uses its gateway factors rather than a Kaya role.
+
+Route dependencies named `require_user`, `require_editor` and `require_admin` perform enforcement. Permissions are manually attached per route; there is no object ownership layer across ordinary modules. Audit sensitive changes and grant Admin only where administration is required.

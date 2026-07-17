@@ -1,0 +1,47 @@
+---
+title: "Backing Up Kaya"
+description: "Create a consistent backup of Kaya's database, keys, uploads and encrypted content."
+order: 7
+version: "current"
+---
+
+# Backing Up Kaya
+
+Kaya's **Backup Manager** records and coordinates workload backups; it does not create a complete backup of the Kaya application itself.
+
+## What to back up
+
+Back up the entire repository deployment directories:
+
+- `data/`, including `kaya.db`, hidden `.runtime.env`, Secret Vault and Secure Send storage, recordings and migration backups;
+- `uploads/`, including hardware asset files;
+- `docker-compose.yml`, `.env` and any reverse-proxy configuration.
+
+## Create a cold backup
+
+The safest simple method stops writes briefly:
+
+```bash
+cd /path/to/kaya
+docker compose stop kaya secure-send-gateway
+tar --create --gzip --file "kaya-backup-$(date +%F-%H%M%S).tar.gz" data uploads docker-compose.yml .env
+docker compose start kaya secure-send-gateway
+```
+
+If `.env` does not exist, omit it from the command. Store the archive on a different system and protect it as sensitive data.
+
+<Callout type="danger" title="The backup contains security-critical material">
+`data/.runtime.env`, licence keys, stored integration credentials, encrypted vault data and recordings require strict access control. Do not publish the archive or store its password beside it.
+</Callout>
+
+## Verify the backup
+
+List the archive and confirm the required paths exist:
+
+```bash
+tar --list --file kaya-backup-YYYY-MM-DD-HHMMSS.tar.gz | head -n 30
+```
+
+Periodically restore a copy to an isolated host and test sign-in, encrypted data and uploads. Secret Vault users should also keep tested `.kayavault` portable exports; those protect against loss of Kaya's application encryption key in a way that a database-only copy cannot.
+
+See [Restoring Kaya](/docs/getting-started/restoring-kaya).

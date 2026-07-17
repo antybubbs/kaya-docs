@@ -1,0 +1,28 @@
+---
+title: "Collecting Support Information"
+description: "Gather useful, redacted evidence for a Kaya issue."
+order: 12
+version: "current"
+---
+
+# Collecting Support Information
+
+Include:
+
+- installed Kaya version/tag or image digest and whether it is a development channel;
+- deployment type, host OS, Docker and Compose versions;
+- exact module, route, user role, time/time zone and reproducible steps;
+- expected and actual behaviour, HTTP status and request ID where shown;
+- redacted `docker compose ps` and relevant time-bounded logs;
+- dependency versions/status for Pi-hole, `guacd`, Proxmox, OIDC, SMTP or agent;
+- whether the problem began after an update, migration or setting change.
+
+```bash
+docker compose ps
+docker compose images
+docker compose logs --since=20m kaya
+```
+
+Never include passwords, `.runtime.env`, encryption/recovery keys, cookies, OIDC/agent tokens, SMTP credentials, full licence keys, private Vault content or Secure Send token URLs. Replace internal addresses and personal data consistently while preserving relationships needed to understand the issue.
+
+Make a backup before reproducing a destructive or migration-related problem.

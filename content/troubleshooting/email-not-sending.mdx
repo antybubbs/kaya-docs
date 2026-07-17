@@ -1,0 +1,20 @@
+---
+title: "Email Not Sending"
+description: "Diagnose SMTP connection, authentication, TLS and template failures."
+order: 8
+version: "current"
+---
+
+# Email Not Sending
+
+Send a controlled test from **Site Administration > Email** and note the exact error. Then inspect:
+
+```bash
+docker compose logs --since=15m kaya
+```
+
+Timeout/refused indicates DNS, route, firewall, port or relay-listener problems. Authentication failure indicates username/password or provider policy. Certificate errors indicate hostname/trust-chain issues. Sender rejected indicates From-domain or relay permission. Successful SMTP submission with no inbox delivery requires relay queues, spam and DMARC/SPF review.
+
+Confirm only one of STARTTLS or implicit SSL matches the port and that Base URL is correct. A template formatting error can also block a particular message; restore the default supported placeholders shown in the editor.
+
+Do not paste SMTP passwords into logs or support requests. Rotate the credential if it may have been exposed.

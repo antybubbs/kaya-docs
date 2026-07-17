@@ -1,0 +1,29 @@
+---
+title: "Container Will Not Start"
+description: "Interpret entrypoint, migration, storage and health-check failures."
+order: 2
+version: "current"
+---
+
+# Container Will Not Start
+
+```bash
+docker compose ps -a
+docker compose logs --tail=300 kaya
+docker inspect kaya --format '{{json .State}}'
+```
+
+Look for failure before or after **Running database migrations**. Permission errors usually concern bind-mounted `data/`/`uploads/`; database errors may concern SQLite integrity or a failed migration; missing `.runtime.env` on an existing encrypted database is a recovery issue, not a cue to generate a new key.
+
+Check free space and host ownership:
+
+```bash
+df -h
+ls -la data uploads
+```
+
+<Callout type="danger" title="Do not remove the data directory">
+Recreating containers is safe for bind-mounted state; deleting `data/`, `.runtime.env`, volumes or the database is not. Take a copy before permission, migration or database work.
+</Callout>
+
+If the image starts only with a fresh directory, preserve the original unchanged and follow [Database Problems](/docs/troubleshooting/database-problems) or [Restoring Kaya](/docs/getting-started/restoring-kaya).

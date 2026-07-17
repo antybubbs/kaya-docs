@@ -1,0 +1,16 @@
+---
+title: "Guacamole (guacd)"
+description: "Provide Remote Manager RDP transport through the bundled guacd service."
+order: 5
+version: "current"
+---
+
+# Guacamole (guacd)
+
+The standard Compose file runs `guacamole/guacd:1.6.0`. Kaya's bridge connects to `guacd` for RDP; SSH uses a separate bundled Node helper.
+
+In **Site Administration > Module Settings > Remote Manager**, enable Guacamole and use host `guacd`, port `4822` for the supplied Compose network. If using an external `guacd`, allow the Kaya container to reach it and restrict access so untrusted clients cannot submit instructions directly.
+
+Create an RDP-enabled VLAN/IP record, open Remote Manager and run the preflight/start flow. Review firewall, DNS, RDP policy and certificate behaviour if it fails. Audio, drive, printing, graphics and performance options are Admin-controlled globally with per-host overrides.
+
+To remove the integration, disable Guacamole/RDP and remove the service only after confirming no RDP records are expected to work. SSH remains separate.

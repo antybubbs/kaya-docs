@@ -1,0 +1,19 @@
+---
+title: "Testing"
+description: "Run Kaya's current automated and syntax validation suites."
+order: 10
+version: "current"
+---
+
+# Testing
+
+Install Python dependencies, then run:
+
+```bash
+python -m pytest
+python -m compileall -q app scripts tests
+```
+
+The pytest suite covers allowed hosts/client IP, dashboard, demo safety, DNS, mail, network monitoring, OIDC, PWA, Secret Vault, Secure Send, performance diagnostics and navigation treatment. Add focused tests beside the relevant area and test Viewer/Editor/Admin denial as well as success.
+
+For UI changes, run the local Compose build, inspect desktop/mobile themes, test form validation/CSRF and use the browser network/console panels. For deployment changes, build the image and verify `/healthz`, migration from a copied database and the Secure Send gateway boundary.

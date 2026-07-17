@@ -122,3 +122,9 @@ Persistent bind mounts:
 - `./data/remote-recordings:/app/data/remote-recordings`
 
 The Kaya container is configured as read-only with writable volumes and tmpfs.
+
+The current Compose deployment also runs `secure-send-gateway`, a second ASGI process from the same image on port 8999. It shares the database and application encryption key but exposes only tightly shaped recipient, asset and protected-health routes. Secure Send payloads and Secret Vault attachments live under the `data` mount.
+
+## Process-local background work
+
+DNS collection, domain polling, compute monitoring, reachability checks and Secure Send cleanup run in the web process. Remote Manager also controls Node helper processes. Locks and scheduling are not distributed, so the supported architecture is a single Kaya application replica.

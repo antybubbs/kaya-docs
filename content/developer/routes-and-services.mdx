@@ -1,0 +1,16 @@
+---
+title: "Routes and Services"
+description: "Understand Kaya's server-rendered router and domain-service boundaries."
+order: 6
+version: "current"
+---
+
+# Routes and Services
+
+Routers in `app/routers` group modules by URL prefix. Most GET handlers query SQLAlchemy and render Jinja2. Browser mutations use form/JSON endpoints with CSRF and route dependencies. Internal UI refresh endpoints return JSON or partial HTML. Remote sessions add WebSockets, while compute/backup agents use bearer-token endpoints.
+
+Services contain reusable work such as dashboard composition, DNS provider/collector/insight processing, domain polling, compute monitoring, mail, import/export, OIDC discovery/identity mapping, client-IP resolution, auditing, Secret Vault cryptography and Secure Send lifecycle operations.
+
+Current technical debt is visible: `admin.py` is broad; settings use the historically named `RemoteManagerSetting`; some business logic remains in routers; and permissions are attached manually. New code should improve boundaries without breaking existing routes, schema or migration behaviour.
+
+See [API](/docs/developer/api) and [Creating a Module](/docs/developer/creating-a-module).

@@ -1,0 +1,28 @@
+---
+title: "Trusted Proxies"
+description: "Configure the proxy-header trust boundary separately from allowed browser hosts."
+order: 7
+version: "current"
+---
+
+# Trusted Proxies
+
+`FORWARDED_ALLOW_IPS` is an environment setting containing the IP addresses or CIDRs of proxies that connect directly to Kaya. Only matching peers may supply forwarding headers used for client IP and protocol. The default `127.0.0.1` is appropriate for direct access without a proxy.
+
+Examples:
+
+```env
+FORWARDED_ALLOW_IPS=172.20.0.0/16
+```
+
+Use a stable proxy container IP or dedicated network CIDR. For Cloudflare Tunnel, trust the local `cloudflared` peer, not all Cloudflare public networks. Never use `*` on a directly reachable installation.
+
+Recreate Kaya after changing it:
+
+```bash
+docker compose up -d --force-recreate kaya
+```
+
+**Allowed Hosts** is different: it checks the hostname the browser requested. Site Administration's current-request panel shows the effective client, immediate peer and whether forwarding was trusted.
+
+See [Reverse Proxies](/docs/integrations/reverse-proxies) and [Trusted Proxy Problems](/docs/troubleshooting/trusted-proxy-problems).

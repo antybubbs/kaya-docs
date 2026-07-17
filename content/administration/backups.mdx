@@ -1,0 +1,18 @@
+---
+title: "Backup Administration"
+description: "Administer workload targets and distinguish them from Kaya disaster recovery."
+order: 8
+version: "current"
+---
+
+# Backup Administration
+
+Under **Module Settings > Backup Manager**, Admins create named targets and choose the default. The current target types are local directory, SMB, FTP and SFTP-style remote configuration. Kaya validates formats and offers a read/write or connection test appropriate to the target.
+
+Saved credentials are encrypted at rest, then supplied to an authenticated backup agent when a job is dispatched. Restrict the service account to its backup location and use a separate account per environment.
+
+The module coordinates Docker workload jobs only when the reporting agent advertises the needed capability. Manual records are documentation, not executable schedules. A queued or dispatched status is not evidence of a valid artifact; inspect the returned job state/log and test a restore.
+
+<Callout type="danger" title="This is not a Kaya system backup">
+Backup Manager does not fully capture Kaya's SQLite database, runtime encryption key, uploads, Vault data and recordings. Maintain the separate process in [Backing Up Kaya](/docs/getting-started/backing-up-kaya).
+</Callout>

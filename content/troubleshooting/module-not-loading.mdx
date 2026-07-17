@@ -1,0 +1,25 @@
+---
+title: "Module Not Loading"
+description: "Separate disabled modules, missing dependencies, permissions and collector failures."
+order: 9
+version: "current"
+---
+
+# Module Not Loading
+
+First distinguish a missing navigation item, an HTTP error and an empty/stale page.
+
+- Admin-only groups are hidden from Viewer and Editor.
+- **Coming soon** entries are disabled by design.
+- DNS Manager and Secure Send have Admin enablement controls.
+- RDP requires enabled Guacamole and reachable `guacd`; Docker data requires an agent; Pi-hole data requires a provider.
+- Public demo mode disables remote, backup, network and security-sensitive actions.
+
+Check the browser status code and recent Kaya log, then inspect the module's Site Administration panel and dependency state. For stale background information, compare last successful collection/check-in rather than repeatedly refreshing the browser.
+
+```bash
+docker compose ps
+docker compose logs --since=30m kaya
+```
+
+Report the module, route, role, time, request ID if shown, dependency state and a redacted error.
