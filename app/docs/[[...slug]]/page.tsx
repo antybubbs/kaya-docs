@@ -30,9 +30,11 @@ export default function DocsPage({ params }: { params: { slug?: string[] } }) {
     <section className="content container docs-layout">
       <DocsSidebar tree={getNavTree()} currentSlug={doc.slug} />
       <article className="page-content docs-content">
-        <p className="eyebrow">{doc.section}</p>
-        <h1>{doc.frontmatter.title}</h1>
-        {doc.frontmatter.description && <p className="lede">{doc.frontmatter.description}</p>}
+        <header className="page-header">
+          <p className="eyebrow">{doc.section}</p>
+          <h1>{doc.frontmatter.title}</h1>
+          {doc.frontmatter.description && <p className="lede">{doc.frontmatter.description}</p>}
+        </header>
         <div className="markdown-body">
           <MDXRemote
             source={doc.body}
