@@ -5,8 +5,6 @@ order: 3
 version: "current"
 ---
 
-# OpenID Connect
-
 Kaya implements OIDC Authorization Code flow with PKCE and supports one active provider. Native LDAP and Active Directory binding are not implemented; use an OIDC-capable identity layer when those directories are the source.
 
 Use HTTPS, set Kaya's Base URL, create the exact callback ending `/auth/oidc/callback`, and keep a tested local TOTP-protected break-glass Admin. The provider must publish discovery metadata and asymmetrically signed ID-token keys; Kaya rejects symmetric ID-token signing.

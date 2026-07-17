@@ -5,8 +5,6 @@ order: 7
 version: "current"
 ---
 
-# Docker Agent
-
 Kaya exposes authenticated agent endpoints for compute check-ins and backup jobs. The agent is not bundled as a service in the supplied Kaya Compose file, so follow the matching agent project's instructions where available.
 
 Create a Docker-agent host in **VM/Docker Manager** and copy the one-time token into the agent's protected configuration. Kaya stores only its SHA-256 hash. The agent posts inventory/metrics and polls backup jobs using the bearer token.

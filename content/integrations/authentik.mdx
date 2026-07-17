@@ -5,15 +5,13 @@ order: 1
 version: "current"
 ---
 
-# Configure authentik as Kaya's identity provider
-
 This guide explains how to connect Kaya to authentik using OpenID Connect (OIDC). It is written for administrators who are comfortable using the authentik and Kaya web interfaces but do not need to know the OIDC protocol in detail.
 
 When the integration is complete, people can authenticate with authentik and use their existing Kaya account. Kaya continues to control whether an account is active, which Kaya role it has, and which modules it can access.
 
 > **Do not enable OIDC-required mode at the beginning.** Keep local login available until configuration, account linking, normal login, logout, and emergency access have all been tested.
 
-## What you will configure
+# What you will configure
 
 The setup has four parts:
 
@@ -35,7 +33,7 @@ Kaya uses:
 
 Kaya does not require an authentik API token and does not store refresh tokens.
 
-## Example addresses
+# Example addresses
 
 Replace these examples with your real addresses throughout the guide:
 
@@ -49,7 +47,7 @@ Replace these examples with your real addresses throughout the guide:
 
 Use HTTPS for both services. HTTP is supported only for localhost development.
 
-## Before you start
+# Before you start
 
 You need:
 
@@ -71,7 +69,7 @@ In Kaya:
 
 The break-glass account should use a strong password and Kaya 2FA. Do not make an OIDC-only account the break-glass account.
 
-## Step 1: Create the authentik application and provider
+# Step 1: Create the authentik application and provider
 
 authentik recommends creating an application and provider together.
 

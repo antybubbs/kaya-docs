@@ -5,8 +5,6 @@ order: 4
 version: "current"
 ---
 
-# Database Problems
-
 Stop writes and make a filesystem copy before diagnosis. Kaya uses `/app/data/kaya.db` plus possible WAL/SHM files and creates `kaya.db.pre-migration` before normal startup migration.
 
 ```bash

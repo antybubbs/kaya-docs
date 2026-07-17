@@ -5,8 +5,6 @@ order: 11
 version: "current"
 ---
 
-# Backup and Restore Failures
-
 For a Kaya system archive, confirm it contains `data/.runtime.env`, `data/kaya.db`, encrypted storage, uploads and deployment configuration. An archive without the original encryption key is incomplete for encrypted features. Restore first to an isolated directory and inspect container migration logs.
 
 For Backup Manager jobs, inspect target connection test, agent last seen/capabilities, job state, log, artifact path and size. Queued means the agent has not accepted it; dispatched/running is not completion; failed requires the returned error. A restore needs a compatible artifact and the same backup encryption material supplied through the job.

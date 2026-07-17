@@ -5,15 +5,13 @@ order: 1
 version: "current"
 ---
 
-# Dashboard
-
 The Dashboard is the landing page after sign-in. It assembles authorised widgets for inventory, utilisation, DNS health, monitoring, activity and shortcuts. A widget failure is isolated so the rest of the page remains usable.
 
 When Admin settings allow it, select **Edit dashboard** to enable, disable, reorder and resize widgets. Preferences are stored per user. **Monitor mode** expands the dashboard and reduces navigation chrome. The displayed refresh time can differ from the source-data timestamp because some widgets read retained collector data rather than contacting infrastructure during page rendering.
 
 The global poll interval is 10 seconds, 30 seconds, 1 minute or 5 minutes. Admins can disable widget keys globally, require the Attention Required widget, control source-age display and disable customisation or monitor mode.
 
-## Common problems
+# Common problems
 
 - A missing widget may be globally disabled, unauthorised, or switched off in personal preferences.
 - Stale compute or DNS values normally indicate an agent/provider collector problem, not a browser refresh problem.
