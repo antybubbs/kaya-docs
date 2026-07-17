@@ -5,11 +5,11 @@ order: 3
 version: "current"
 ---
 
-# Before you begin
+### Before you begin
 
 Confirm Docker and Compose work, choose a host with persistent storage, and decide whether Kaya will initially be reached directly or through a reverse proxy. The commands below use the current repository Compose file.
 
-# Install from the repository
+### Install from the repository
 
 <Steps>
 
@@ -47,7 +47,7 @@ Confirm Docker and Compose work, choose a host with persistent storage, and deci
 
 </Steps>
 
-# What the deployment creates
+### What the deployment creates
 
 The Compose project runs Kaya, the restricted Secure Send gateway and `guacd`. It mounts `./data` at `/app/data` and `./uploads` at `/app/uploads`. On first start, the entrypoint creates `data/.runtime.env` with persistent session and encryption keys, runs SQLite migrations and starts Uvicorn.
 
@@ -57,7 +57,7 @@ The encryption key in this file protects stored credentials, Secret Vault data a
 
 The application container is read-only apart from mounted storage and `/tmp`, uses `no-new-privileges`, and receives `NET_RAW` for ping monitoring.
 
-# Reverse proxy installations
+### Reverse proxy installations
 
 Set `FORWARDED_ALLOW_IPS` to only the IP or CIDR of the proxy that connects directly to Kaya. This differs from the Allowed Hosts list in Site Administration. See [Reverse Proxies](/docs/integrations/reverse-proxies) before exposing Kaya.
 

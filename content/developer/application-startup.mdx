@@ -5,7 +5,7 @@ order: 4
 version: "current"
 ---
 
-# Application Startup
+### Application Startup
 
 The Docker entrypoint creates writable data paths, initialises persistent `SECRET_KEY` and `ENCRYPTION_KEY` in `/app/data/.runtime.env` when absent, applies restrictive Vault/Send directory modes, handles demo seeding, optionally copies `kaya.db.pre-migration`, then runs `scripts/migrate_sqlite.py` as the Kaya user.
 

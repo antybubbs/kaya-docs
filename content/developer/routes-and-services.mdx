@@ -5,7 +5,7 @@ order: 6
 version: "current"
 ---
 
-# Routes and Services
+### Routes and Services
 
 Routers in `app/routers` group modules by URL prefix. Most GET handlers query SQLAlchemy and render Jinja2. Browser mutations use form/JSON endpoints with CSRF and route dependencies. Internal UI refresh endpoints return JSON or partial HTML. Remote sessions add WebSockets, while compute/backup agents use bearer-token endpoints.
 

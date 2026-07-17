@@ -5,7 +5,7 @@ order: 11
 version: "current"
 ---
 
-# Migrations
+### Migrations
 
 Kaya does not use Alembic. Models live in `app/models/models.py`; table creation and manual SQLite evolution are split between application bootstrap and `scripts/migrate_sqlite.py`. The container entrypoint normally runs the script first and copies an existing database to `kaya.db.pre-migration`.
 

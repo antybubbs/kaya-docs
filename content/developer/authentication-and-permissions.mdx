@@ -5,7 +5,7 @@ order: 7
 version: "current"
 ---
 
-# Authentication and Permissions
+### Authentication and Permissions
 
 Local passwords use Argon2. Optional TOTP secrets and stored integration values use Fernet-compatible encryption derived from the persistent application key. Starlette SessionMiddleware stores signed session state in a Strict SameSite cookie; `AppSession` is an activity ledger rather than the source of cookie validity.
 

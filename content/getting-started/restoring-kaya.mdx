@@ -11,7 +11,7 @@ Restore into an isolated test location first whenever possible. Use a backup fro
 Stop Kaya, take a separate copy of the current `data/` and `uploads/` directories, and verify the backup archive before replacing anything.
 </Callout>
 
-# Restore a cold backup
+### Restore a cold backup
 
 ```bash
 cd /path/to/kaya
@@ -26,7 +26,7 @@ docker compose logs --tail=150 kaya
 
 The entrypoint runs current additive SQLite migrations and normally creates `data/kaya.db.pre-migration` before changing an existing database.
 
-# Validate the restore
+### Validate the restore
 
 1. Confirm `/healthz` returns successfully.
 2. Sign in with a known Admin account.

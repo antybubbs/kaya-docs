@@ -5,7 +5,7 @@ order: 8
 version: "current"
 ---
 
-# Safe update sequence
+### Safe update sequence
 
 1. Read the target release notes and check for deployment changes.
 2. Create and verify a complete [Kaya backup](/docs/getting-started/backing-up-kaya).
@@ -27,7 +27,7 @@ version: "current"
 
 The standard entrypoint preserves runtime keys, creates `kaya.db.pre-migration` by default when a database exists, and runs `scripts/migrate_sqlite.py` before starting the application.
 
-# After the update
+### After the update
 
 Sign in and check the Dashboard, Site Administration, one read/write workflow, background module status, uploads, Remote Manager dependencies and encrypted features. Browser users may receive a PWA update prompt.
 

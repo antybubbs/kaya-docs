@@ -7,15 +7,15 @@ version: "current"
 
 Kaya is a self-hosted infrastructure management platform that helps users document, organise, monitor and manage their environment from one interface.
 
-# Why Kaya was created
+### Why Kaya was created
 
 Infrastructure information often becomes scattered across spreadsheets, notes, browser bookmarks, specialist administration tools and unconnected dashboards. Kaya provides a central place to connect the operational facts without attempting to replace every specialist platform.
 
-# Who it is for
+### Who it is for
 
 Kaya suits homelab owners/users, system and network administrators, IT support teams, small organisations and technical teams that want to keep their operational records on infrastructure they control. Its three roles support read-only users, operational editors and administrators.
 
-# What can it do
+### What can it do
 
 The current interface includes:
 
@@ -30,18 +30,18 @@ The current interface includes:
 
 Some modules depend on external systems. For example, DNS Manager currently integrates with Pi-hole, RDP uses `guacd`, and Docker inventory requires an agent. Kaya remains useful when a specialist service is unavailable because much of its managed information is stored locally.
 
-# Design principles
+### Design principles
 
 Kaya is self-hosted, SQLite-first, server-rendered and designed for a single application instance. Persistent data stays in bind-mounted directories. Sensitive stored values use the persistent application encryption key; browser mutations use CSRF checks; and routes apply Viewer, Editor or Admin access requirements.
 
-# Supported platforms
+### Supported platforms
 
 The confirmed deployment is a Linux container/vm/server run with Docker Engine and Docker Compose v2. Users access it through a modern browser. Direct Python execution is useful for development but is not the normal production deployment.
 
-# Open-source approach
+### Open-source approach
 
 Kaya is distributed under the licence in its public repository. Its source, issue history and releases are available from the [Kaya GitHub repository](https://github.com/antybubbs/kaya).
 
-# Next steps
+### Next steps
 
 Check the [system requirements](/docs/getting-started/system-requirements), then [install Kaya](/docs/getting-started/installing-kaya).
