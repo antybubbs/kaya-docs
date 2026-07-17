@@ -1,0 +1,18 @@
+---
+title: "Import and Export"
+description: "Use the current Admin-only CSV contracts for IP addresses and licences."
+order: 15
+version: "current"
+---
+
+# Import and Export
+
+Open **Data Management > Import/Export** as an Admin. The current implementation supports only IP addresses and licences; other modules do not have a general import/export contract.
+
+Export a current file before preparing a bulk import so headers and accepted values match the running version. Validate managed-list and VLAN references, keep an application backup, then import a small sample before the full set. Review the result in the target module and Audit Logs.
+
+<Callout type="danger" title="Licence exports contain decrypted keys">
+An exported licence CSV is sensitive plaintext. Store and transfer it securely and remove temporary copies.
+</Callout>
+
+Import and export are Admin-only because they can make broad changes or expose protected values.

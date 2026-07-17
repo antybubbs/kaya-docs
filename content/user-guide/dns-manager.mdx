@@ -1,0 +1,20 @@
+---
+title: "DNS Manager"
+description: "Inspect retained Pi-hole data, clients, queries, reports and advisory insights."
+order: 8
+version: "current"
+---
+
+# DNS Manager
+
+Open **Networking > DNS Manager** after an Admin configures an enabled Pi-hole provider.
+
+The Dashboard shows provider health and headline statistics. Query Log provides bounded provider results and filters. Clients combines retained device, IP, hostname, lease and DNS-traffic history. Reports store investigations. Insights runs deterministic, provider-neutral rules and assigns Critical, Warning, Information or Healthy severity.
+
+Insights are advisory observations, not proof of compromise. Editor or Admin can run analysis and acknowledge active items; acknowledgement does not resolve a condition. Kaya resolves a supported insight when a later successful evaluation no longer detects it and can reactivate the same record if it returns.
+
+Background collection stores results and does not require a restart when database settings change. Ordinary dashboard and client pages use retained data, so they remain useful during a Pi-hole outage. Pi-hole exposes DNS lookups, not full browser URLs or page history.
+
+Viewer can inspect data. Editor and Admin can analyse, acknowledge, create/delete investigations and manage confirmed VLAN/IP links. Only Admin configures the provider.
+
+Related: [Pi-hole](/docs/integrations/pihole), [VLAN/IP Manager](/docs/user-guide/ip-addresses).

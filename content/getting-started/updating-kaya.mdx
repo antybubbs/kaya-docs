@@ -1,0 +1,38 @@
+---
+title: "Updating Kaya"
+description: "Back up, pull a new image, migrate and verify Kaya safely."
+order: 9
+version: "current"
+---
+
+# Updating Kaya
+
+## Safe update sequence
+
+1. Read the target release notes and check for deployment changes.
+2. Create and verify a complete [Kaya backup](/docs/getting-started/backing-up-kaya).
+3. Pull the configured image and recreate the services:
+
+   ```bash
+   cd /path/to/kaya
+   docker compose pull
+   docker compose up -d
+   ```
+
+4. Watch startup and migration output:
+
+   ```bash
+   docker compose logs --tail=200 kaya
+   docker compose ps
+   curl --fail http://127.0.0.1:8080/healthz
+   ```
+
+The standard entrypoint preserves runtime keys, creates `kaya.db.pre-migration` by default when a database exists, and runs `scripts/migrate_sqlite.py` before starting the application.
+
+## After the update
+
+Sign in and check the Dashboard, Site Administration, one read/write workflow, background module status, uploads, Remote Manager dependencies and encrypted features. Browser users may receive a PWA update prompt.
+
+<Callout type="warning" title="Rollback means restoring data too">
+Application images and database schema evolve together. If rollback is necessary, restore the pre-update application data snapshot rather than running an older image against a migrated live database.
+</Callout>

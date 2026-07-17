@@ -1,0 +1,16 @@
+---
+title: "Application Startup"
+description: "Follow container initialisation, migration and background-service startup."
+order: 4
+version: "current"
+---
+
+# Application Startup
+
+The Docker entrypoint creates writable data paths, initialises persistent `SECRET_KEY` and `ENCRYPTION_KEY` in `/app/data/.runtime.env` when absent, applies restrictive Vault/Send directory modes, handles demo seeding, optionally copies `kaya.db.pre-migration`, then runs `scripts/migrate_sqlite.py` as the Kaya user.
+
+Uvicorn starts `app.main:app` on port 8080 without accepting proxy headers itself; Kaya's own trusted-peer logic interprets forwarding claims. The separate Compose service starts `app.security_gateway:app` on port 8999 with gateway mode and migrations disabled.
+
+FastAPI lifespan/bootstrap creates tables/defaults, starts process-local DNS, domain, compute, network and Secure Send cleanup loops as applicable, and manages Node helpers for Remote Manager. Shutdown cancels tasks and helper processes.
+
+Because coordination is process-local, run one web application replica until a shared scheduler/lock is implemented.

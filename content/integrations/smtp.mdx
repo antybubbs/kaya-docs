@@ -1,0 +1,18 @@
+---
+title: "SMTP"
+description: "Connect an SMTP relay for password reset and Secure Send email."
+order: 2
+version: "current"
+---
+
+# SMTP
+
+Kaya uses SMTP for password resets and optional Secure Send messages. It does not receive email.
+
+Create a dedicated relay account permitted to send only from Kaya's address. In **Site Administration > Email > General**, enter host, port, username, password, sender address/name and select STARTTLS or implicit SSL according to the provider. Set the public Base URL first, enable SMTP, save and send a test.
+
+Typical ports are 587 for STARTTLS and 465 for implicit SSL, but follow the relay's documentation. Restrict relay source networks and avoid a personal mailbox credential. The password is encrypted in Kaya's database and not shown after saving.
+
+If delivery fails, inspect Kaya's message and container log, then check DNS, routing, TLS trust, relay authentication, From-address policy and quarantine logs. See [Email Not Sending](/docs/troubleshooting/email-not-sending).
+
+To remove SMTP, disable it and revoke the account or token at the relay. Password-reset emails and configured Secure Send mail will stop.

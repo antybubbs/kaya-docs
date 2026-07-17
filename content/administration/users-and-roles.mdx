@@ -1,43 +1,22 @@
-﻿---
+---
 title: "Users and Roles"
-description: "Manage access for Kaya users."
-order: 1
+description: "Create, disable and secure Kaya user accounts."
+order: 2
 version: "current"
 ---
 
-Kaya uses a simple role model for application access.
+# Users and Roles
 
-| Role | Access |
-| --- | --- |
-| Viewer | Read-only access to most authenticated pages |
-| Editor | Create and update operational records |
-| Admin | Manage users, settings, audit logs and administrative workflows |
+Open **Team > Users** as an Admin. Kaya has Viewer, Editor and Admin roles and no active Groups feature.
 
-## First administrator
+Admins can create users, edit names and email, assign a role, select local or OIDC authentication type, activate or deactivate an account, set a local password, designate a break-glass Admin and reset another user's TOTP configuration. Local passwords require at least 12 characters. Email addresses identify accounts and must remain unique.
 
-The first administrator is created from `/setup` when Kaya starts with an empty user table.
+Deactivating a user prevents future authentication. Review active sessions and linked OIDC identities when changing authentication type. TOTP reset removes the configured second factor; confirm the user's identity through an independent channel first.
 
-After setup, admins can create and edit users from the Team area.
+<Callout type="warning" title="Protect the final Admin">
+Do not deactivate, demote or convert the last tested recovery administrator while changing OIDC or emergency-login settings.
+</Callout>
 
-## User management
+The `/setup` route creates only the first Admin when no user exists. There is no public self-registration workflow.
 
-Administrators can:
-
-- Create users.
-- Edit names, email, role and active status.
-- Set or change passwords.
-- Reset another user's 2FA configuration.
-
-## Authentication features
-
-Kaya supports:
-
-- Email/password login.
-- Argon2 password hashing.
-- Optional TOTP two-factor authentication.
-- Password reset by email when SMTP is configured.
-- Session activity tracking.
-
-## Permission model
-
-Permissions are enforced per route with FastAPI dependencies. Kaya currently has coarse-grained roles rather than per-object permissions.
+Related: [Permissions](/docs/administration/permissions), [Authentication](/docs/administration/authentication).

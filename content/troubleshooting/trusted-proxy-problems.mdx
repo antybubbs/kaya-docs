@@ -1,0 +1,23 @@
+---
+title: "Trusted Proxy Problems"
+description: "Correct client-IP and protocol trust without accepting spoofed headers."
+order: 7
+version: "current"
+---
+
+# Trusted Proxy Problems
+
+Symptoms include every audit event showing the proxy IP, HTTPS being detected as HTTP, or forwarded headers being ignored.
+
+In **Site Administration > Security**, compare immediate peer, forwarded value, effective client and trust match. `FORWARDED_ALLOW_IPS` must contain the address/CIDR seen as the immediate socket peer, not the browser's subnet or every upstream service.
+
+After changing `.env`, recreate Kaya:
+
+```bash
+docker compose up -d --force-recreate kaya
+docker compose logs --tail=100 kaya
+```
+
+If the proxy container address changes, place it on a dedicated network and trust that narrow CIDR. For Cloudflare Tunnel, trust the local connector. Do not use `*`; an untrusted direct client could spoof recorded address or protocol.
+
+Related: [Trusted Proxies](/docs/administration/trusted-proxies).

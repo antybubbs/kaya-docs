@@ -1,0 +1,22 @@
+---
+title: "Authentication"
+description: "Configure local login, TOTP, password reset and OpenID Connect safely."
+order: 4
+version: "current"
+---
+
+# Authentication
+
+Kaya supports local email/password login, optional TOTP and one configured OpenID Connect provider. It does not implement native LDAP or Active Directory protocols; those directories can participate through a compatible OIDC identity provider.
+
+Open **Site Administration > Authentication**. General mode can be Local only, Local and OIDC, OIDC preferred or OIDC required. OIDC-required mode is refused unless discovery and a test login succeeded, emergency local access is enabled, a valid break-glass Admin exists and the Admin acknowledges the risk.
+
+The provider page accepts issuer, client ID, encrypted client secret, scopes, TLS verification, timeout from 2 to 30 seconds, UserInfo use, verified-email requirement, just-in-time provisioning, allowed domains, email matching, default Viewer/Editor role, role sync, name/email updates and provider logout. Disabling TLS, JIT, email matching or role sync requires explicit risk acknowledgement.
+
+Claim mapping supports dotted claim paths but rejects empty paths and protected `iss`/`sub` components. Group mappings use `group=role`, with Viewer, Editor or Admin targets. Review Admin mappings carefully.
+
+<Callout type="danger" title="Keep emergency access working">
+Before requiring OIDC, test `/auth/local` with the designated local Admin, password and TOTP. Store its recovery procedure outside Kaya.
+</Callout>
+
+See [OpenID Connect](/docs/integrations/openid-connect) and [Cannot Log In](/docs/troubleshooting/cannot-log-in).

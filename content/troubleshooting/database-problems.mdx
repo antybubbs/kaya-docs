@@ -1,0 +1,25 @@
+---
+title: "Database Problems"
+description: "Check SQLite consistency, locks, migrations and recovery state."
+order: 4
+version: "current"
+---
+
+# Database Problems
+
+Stop writes and make a filesystem copy before diagnosis. Kaya uses `/app/data/kaya.db` plus possible WAL/SHM files and creates `kaya.db.pre-migration` before normal startup migration.
+
+```bash
+docker compose stop kaya secure-send-gateway
+cp -a data "data-diagnostic-$(date +%F-%H%M%S)"
+docker compose start kaya secure-send-gateway
+docker compose logs --tail=250 kaya
+```
+
+`database is locked` can indicate a long transaction, abrupt termination, filesystem locking problem or multiple replicas. Run one application instance. Integrity/malformed errors require restore or SQLite specialist recovery; migration errors require the exact application version and preceding log.
+
+<Callout type="danger" title="Do not copy only kaya.db while Kaya is writing">
+An online file copy can omit WAL content and be inconsistent. Use a cold copy or a correct SQLite backup mechanism.
+</Callout>
+
+Do not replace `.runtime.env` while testing a database. See [Restoring Kaya](/docs/getting-started/restoring-kaya).

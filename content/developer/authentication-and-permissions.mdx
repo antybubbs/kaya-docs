@@ -1,0 +1,16 @@
+---
+title: "Authentication and Permissions"
+description: "Extend sessions, local/OIDC identity and route authorisation safely."
+order: 7
+version: "current"
+---
+
+# Authentication and Permissions
+
+Local passwords use Argon2. Optional TOTP secrets and stored integration values use Fernet-compatible encryption derived from the persistent application key. Starlette SessionMiddleware stores signed session state in a Strict SameSite cookie; `AppSession` is an activity ledger rather than the source of cookie validity.
+
+OIDC uses discovery, Authorization Code plus PKCE, nonce/state validation, asymmetric ID-token verification and controlled identity linking/JIT. Secret Vault step-up imposes additional freshness and MFA-claim requirements.
+
+Use `require_user`, `require_editor` or `require_admin` on every protected route. Validate CSRF for browser mutations, verify WebSocket Origin, and use dedicated bearer-token validation for agents. Write audit events for sensitive, authentication, reveal, destructive and privilege actions without placing secrets in detail fields.
+
+Demo restrictions are a separate defence layer. Any new network, remote, backup, security or destructive endpoint must be reviewed for demo blocking/redaction.

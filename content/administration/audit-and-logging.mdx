@@ -1,0 +1,21 @@
+---
+title: "Audit and Logging"
+description: "Review Kaya audit events and collect container logs without exposing secrets."
+order: 10
+version: "current"
+---
+
+# Audit and Logging
+
+Admins open **System Settings > Audit Logs**. Records can include actor, action, entity, category, severity, request method/path, status, client information, request ID, detail and timestamp. Security-sensitive events such as licence reveal, authentication changes, Vault access actions and destructive operations are recorded without intentionally storing protected values.
+
+Audit data is stored in SQLite. No configurable retention or archive scheduler is implemented; include it in capacity planning and application backups. Demo mode deliberately omits visitor network identifiers.
+
+Container logs are separate:
+
+```bash
+docker compose logs --since=30m kaya
+docker compose logs --since=30m secure-send-gateway
+```
+
+Before sharing logs, remove session cookies, bearer tokens, Secure Send token paths, email addresses, internal addresses and provider errors containing credentials. The Secure Send gateway disables its own Uvicorn access log, but upstream proxies must also redact token paths.

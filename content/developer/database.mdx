@@ -109,3 +109,11 @@ Kaya uses a mixture of explicit foreign keys and polymorphic references.
 Explicit ownership exists for many records through foreign keys such as user IDs, host IDs and module-specific parent IDs.
 
 Custom fields use `entity_type` and `entity_id`, so database-level referential integrity is not enforced for those values.
+
+## Current encrypted-feature tables
+
+Secret Vault adds owner vault/session/TOTP-use, collection/member, item/version, attachment and portable-backup records. User-facing titles, values, filenames and content are encrypted; the database retains only the control metadata needed before unlock.
+
+Secure Send adds package, file, recipient-session and activity records. Recipient/content metadata is encrypted, access credentials are hashed or wrapped, and public routes use opaque tokens rather than sequential IDs.
+
+OIDC adds provider, external identity, transaction and link-invitation records. Provider secrets are encrypted and invitation tokens are stored hashed.

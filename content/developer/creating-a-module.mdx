@@ -1,0 +1,21 @@
+---
+title: "Creating a Module"
+description: "Add a Kaya module without bypassing migrations, roles, audit or demo safeguards."
+order: 8
+version: "current"
+---
+
+# Creating a Module
+
+1. Define models and relationships in `app/models/models.py`.
+2. Add idempotent SQLite migration logic to the runtime path and `scripts/migrate_sqlite.py` where required.
+3. Create a focused router and service boundary, then include the router in `app/main.py`.
+4. Add Jinja templates and only the CSS/JavaScript required for progressive enhancement.
+5. Add navigation using the exact user-facing module name.
+6. Apply role dependencies, CSRF, input bounds, safe upload handling and audit events.
+7. Encrypt secrets, avoid logging protected values and implement clean deletion semantics.
+8. Add demo restrictions for mutation/network/secret functionality.
+9. Add tests for permissions, validation, security and failure behaviour.
+10. Update source docs and the separate `kaya-docs` user/developer guides.
+
+Do not advertise a disabled navigation placeholder as an active module. Prefer additive schema change and preserve existing URLs/data.

@@ -1,0 +1,66 @@
+---
+title: "Installing Kaya"
+description: "Install Kaya with the supplied Docker Compose deployment."
+order: 4
+version: "current"
+---
+
+# Installing Kaya
+
+## Before you begin
+
+Confirm Docker and Compose work, choose a host with persistent storage, and decide whether Kaya will initially be reached directly or through a reverse proxy. The commands below use the current repository Compose file.
+
+## Install from the repository
+
+<Steps>
+
+1. Clone Kaya and enter the directory.
+
+   ```bash
+   git clone https://github.com/antybubbs/kaya.git
+   cd kaya
+   ```
+
+2. Review `docker-compose.yml`. Change `KAYA_PORT` or `KAYA_SECURE_SEND_PORT` in a local `.env` file if the defaults conflict:
+
+   ```env
+   KAYA_PORT=8080
+   KAYA_SECURE_SEND_PORT=8999
+   FORWARDED_ALLOW_IPS=127.0.0.1
+   ```
+
+3. Pull and start the services.
+
+   ```bash
+   docker compose pull
+   docker compose up -d
+   ```
+
+4. Check the application health and container state.
+
+   ```bash
+   docker compose ps
+   docker compose logs --tail=100 kaya
+   curl --fail http://127.0.0.1:8080/healthz
+   ```
+
+5. Open `http://SERVER-IP:8080/setup` and create the first administrator.
+
+</Steps>
+
+## What the deployment creates
+
+The Compose project runs Kaya, the restricted Secure Send gateway and `guacd`. It mounts `./data` at `/app/data` and `./uploads` at `/app/uploads`. On first start, the entrypoint creates `data/.runtime.env` with persistent session and encryption keys, runs SQLite migrations and starts Uvicorn.
+
+<Callout type="danger" title="Do not lose data/.runtime.env">
+The encryption key in this file protects stored credentials, Secret Vault data and Secure Send data. A database backup without the original key may be unusable for encrypted content.
+</Callout>
+
+The application container is read-only apart from mounted storage and `/tmp`, uses `no-new-privileges`, and receives `NET_RAW` for ping monitoring.
+
+## Reverse proxy installations
+
+Set `FORWARDED_ALLOW_IPS` to only the IP or CIDR of the proxy that connects directly to Kaya. This differs from the Allowed Hosts list in Site Administration. See [Reverse Proxies](/docs/integrations/reverse-proxies) before exposing Kaya.
+
+Continue with [First Login](/docs/getting-started/first-login).

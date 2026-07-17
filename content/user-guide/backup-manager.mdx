@@ -1,0 +1,20 @@
+---
+title: "Backup Manager"
+description: "Track manual backups and coordinate agent-backed workload jobs."
+order: 4
+version: "current"
+---
+
+# Backup Manager
+
+Open **Infrastructure > Backup Manager**. This module has two distinct purposes: manual backup records and jobs for supported Docker workloads.
+
+Editors and Admins can add a manual record containing a name, source, target, schedule, owner, last state, last-run time, notes and enabled state. These records document backup activity; Kaya does not execute a manual record's schedule.
+
+For a Docker workload whose agent reports backup capability, configure its policy and target, then queue a backup. Restore queues a job from the latest suitable successful artifact. The agent polls Kaya, performs the work and returns state, logs, size, artifact location and errors.
+
+<Callout type="danger" title="Restore can replace workload data">
+Confirm the workload, artifact, encryption material and target before queuing a restore. A successful queue response does not prove the agent completed the restore.
+</Callout>
+
+Backup targets are Admin-configured local, SMB, FTP or SFTP-style destinations. Target and job secrets are decrypted for an authenticated agent during dispatch. This module does not back up Kaya itself; see [Backing Up Kaya](/docs/getting-started/backing-up-kaya).

@@ -1,14 +1,20 @@
 ---
 title: "Remote Manager"
-description: "Use Kaya's remote access area responsibly."
-order: 7
+description: "Start browser SSH and RDP sessions and manage connection records safely."
+order: 6
 version: "current"
 ---
 
-Remote Manager helps operators reach systems that need attention.
+# Remote Manager
 
-Document access requirements, supported protocols, logging expectations and security boundaries before enabling remote workflows for a wider team.
+Remote connections are linked one-to-one with managed IP records. Create or enable one on the VLAN/IP record form, then open **Remote Manager > Remote**.
 
-<Callout type="danger" title="Access control">
-Remote access features should be limited to trusted roles and reviewed through audit logs.
+Choose a target and start SSH or RDP. Kaya does not persist the password entered for a session, but credentials pass through the application and its helper process while connecting. SSH uses the bundled Node helper and browser terminal. RDP uses Kaya's Guacamole bridge and `guacd`; a short-lived in-memory token authorises startup.
+
+Editors and Admins can change per-host protocol, port, username and terminal/RDP overrides. Admins configure global helper, split-screen, idle, recording, terminal and RDP options. Only Admin sees **Session Recording**, where recordings can be reviewed, downloaded, converted where supported or deleted.
+
+<Callout type="warning" title="Recordings are sensitive">
+Recordings can contain commands, screen data, personal information and credentials. Limit Admin accounts, protect backups and configure external retention procedures.
 </Callout>
+
+If the public demo is active, live connection operations are disabled. See [Guacamole](/docs/integrations/guacamole) and [Module Not Loading](/docs/troubleshooting/module-not-loading).

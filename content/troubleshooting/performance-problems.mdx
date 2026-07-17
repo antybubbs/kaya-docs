@@ -1,0 +1,23 @@
+---
+title: "Performance Problems"
+description: "Check storage, database growth, collectors and browser refresh behaviour."
+order: 10
+version: "current"
+---
+
+# Performance Problems
+
+Check host resources, disk space and logs:
+
+```bash
+docker stats --no-stream kaya
+df -h
+du -sh data uploads data/remote-recordings data/secret-vault data/secure-send
+docker compose logs --since=30m kaya
+```
+
+Common pressure sources are recordings, uploads, DNS client/traffic history, compute metrics and a large Audit Log. Reduce configured DNS retention where appropriate and archive/remove operational data only through supported interfaces and a backup process.
+
+Kaya is SQLite-first and runs background collectors in the web process. Use one replica and avoid placing the active database on a filesystem with poor locking or latency. A fast dashboard poll does not make source collectors faster and can add browser/server work.
+
+Capture the slow route, dataset size, timestamps, container resource snapshot and relevant collector state before requesting help.
