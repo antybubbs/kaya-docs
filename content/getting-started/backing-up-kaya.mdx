@@ -5,11 +5,9 @@ order: 6
 version: "current"
 ---
 
-# Backing Up Kaya
-
 Kaya's **Backup Manager** records and coordinates workload backups; it does not create a complete backup of the Kaya application itself.
 
-## What to back up
+# What to back up
 
 Back up the entire repository deployment directories:
 
@@ -17,7 +15,7 @@ Back up the entire repository deployment directories:
 - `uploads/`, including hardware asset files;
 - `docker-compose.yml`, `.env` and any reverse-proxy configuration.
 
-## Create a cold backup
+# Create a cold backup
 
 The safest simple method stops writes briefly:
 
@@ -34,7 +32,7 @@ If `.env` does not exist, omit it from the command. Store the archive on a diffe
 `data/.runtime.env`, licence keys, stored integration credentials, encrypted vault data and recordings require strict access control. Do not publish the archive or store its password beside it.
 </Callout>
 
-## Verify the backup
+# Verify the backup
 
 List the archive and confirm the required paths exist:
 

@@ -7,7 +7,7 @@ version: "current"
 
 Before updating, back up `data/`, `uploads/` and `data/remote-recordings/`, then read the release notes for migration steps.
 
-## Update the default image install
+# Update the default image install
 
 The default Compose file pulls the configured Kaya image.
 
@@ -38,7 +38,7 @@ docker compose logs -f kaya
 
 At the time this page was last checked, the latest published Kaya tag was `v0.21.4`.
 
-## Update a branch-based install
+# Update a branch-based install
 
 Use this path when testing `main`, `dev0.23.0` or another branch from source.
 
@@ -59,7 +59,7 @@ docker build -t kaya:dev0.23.0 .
 KAYA_IMAGE=kaya:dev0.23.0 docker compose up -d
 ```
 
-## Recommended update process
+# Recommended update process
 
 1. Back up `data/`, `uploads/` and `data/remote-recordings/`.
 2. Preserve `data/.runtime.env`.

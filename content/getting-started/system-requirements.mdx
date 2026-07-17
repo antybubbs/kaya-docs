@@ -5,9 +5,7 @@ order: 2
 version: "current"
 ---
 
-# System Requirements
-
-## Required software
+# Required software
 
 - A Linux host capable of running Linux containers.
 - Docker Engine and the Docker Compose v2 plug-in (`docker compose`).
@@ -22,13 +20,13 @@ docker compose version
 git --version
 ```
 
-## Storage
+# Storage
 
 Kaya needs persistent, writable storage for `data/` and `uploads/`. The `data/` directory contains the SQLite database, generated runtime secrets, Secret Vault and Secure Send ciphertext, remote recordings and migration backup. Do not place it on ephemeral container storage.
 
 No fixed CPU, memory or disk minimum is enforced in code. Capacity depends on record volume, uploads, recordings, DNS history and compute metrics. Start with several gigabytes of free disk space and monitor growth. Remote recordings and retained DNS data usually grow fastest.
 
-## Network access
+# Network access
 
 The standard Compose deployment publishes:
 
@@ -42,7 +40,7 @@ ICMP monitoring requires the `NET_RAW` capability included in the supplied Compo
 Keep the main interface private where possible. If Secure Send is used externally, publish its gateway through HTTPS without exposing Kaya's authenticated interface to the same audience.
 </Callout>
 
-## Deployment model
+# Deployment model
 
 The code starts background collectors and helper processes inside the web application. Run one Kaya application replica; multiple independent replicas can duplicate polling and background work.
 

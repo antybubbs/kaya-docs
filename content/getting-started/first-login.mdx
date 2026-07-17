@@ -5,11 +5,9 @@ order: 4
 version: "current"
 ---
 
-# First Login
-
 When Kaya has no users, `/login` redirects to `/setup`. The setup form creates the first active Admin account; normal user registration is not available.
 
-## Create the administrator
+# Create the administrator
 
 1. Open `http://SERVER-IP:8080/setup`.
 2. Enter the administrator's name, email address and a unique password of at least 12 characters.
@@ -22,7 +20,7 @@ Kaya stores passwords as Argon2 hashes. Login attempts are rate-limited in memor
 Direct HTTP is acceptable for an isolated first-run check. Configure HTTPS and the secure-session setting before exposing Kaya beyond a trusted network.
 </Callout>
 
-## Enable two-factor authentication
+# Enable two-factor authentication
 
 Open the avatar menu, select **Profile Settings**, then use the security controls to enrol a TOTP authenticator. Save any recovery information outside Kaya. Secret Vault requires Kaya TOTP or a correctly configured OIDC MFA step-up.
 
