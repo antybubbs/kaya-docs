@@ -1,14 +1,39 @@
 ---
-title: "IP/WAN Monitor"
-description: "Monitor IP reachability and interpret status and uptime cards."
-order: 10
-version: "current"
+title: IP/WAN Monitor User Guide
+description: Learn how to use Kaya's IP/WAN Monitor module.
 ---
 
-Open **Monitoring > IP/WAN Monitor**. Monitors are created from a VLAN/IP Manager record and contain a display name, interval and timeout.
+# IP/WAN Monitor User Guide
 
-The page shows current state, last check, response information and recent uptime calculated from stored checks. Any authenticated user can request a CSRF-protected manual refresh. A process-local background loop runs checks when they are due.
+## Overview
 
-ICMP depends on network routing, the target's firewall and the container's `NET_RAW` capability. Treat an Unknown or Down result as a diagnostic prompt, not immediate evidence of service failure. Multiple Kaya replicas can duplicate monitoring because there is no shared job coordinator.
+IP/WAN Monitor provides continuous monitoring of network devices, gateways, public IPs and internet endpoints.
 
-Related: [VLAN/IP Manager](/docs/user-guide/ip-addresses), [Module Not Loading](/docs/troubleshooting/module-not-loading).
+### Features
+
+- Live monitoring
+- Latency
+- Packet loss
+- Jitter
+- Availability
+- Historical performance
+- Incidents
+
+## Dashboard
+
+Each monitor is shown as a live card containing hostname, IP address, latency, availability and a live graph.
+
+Use **Edit Layout** to drag and reorder cards. Your layout is automatically saved and restored.
+
+## Live Modes
+
+- Live (1 second)
+- 5 seconds
+- 10 seconds
+- 60 seconds
+
+Live mode uses a smooth ECG-style scrolling graph.
+
+## Wallboard
+
+Wallboard mode provides a fullscreen monitoring display with configurable columns, responsive cards and live updates.
