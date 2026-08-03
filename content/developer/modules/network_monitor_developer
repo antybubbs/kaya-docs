@@ -1,0 +1,27 @@
+---
+title: IP/WAN Monitor Technical Guide
+description: Architecture and troubleshooting.
+---
+
+# IP/WAN Monitor Technical Guide
+
+## Architecture
+
+- FastAPI background scheduler
+- Single retained asyncio task
+- Five concurrent workers
+- Per-monitor locks
+- Watchdog supervision
+- Runtime diagnostics
+
+## Scheduler
+
+The watchdog recreates the scheduler if it exits unexpectedly.
+
+## Troubleshooting
+
+If monitors become delayed:
+
+1. Check `/networking/ip-wan-monitor/diagnostics`
+2. Review scheduler heartbeat.
+3. Review logs before restarting Kaya.
