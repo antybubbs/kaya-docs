@@ -1,0 +1,59 @@
+---
+description: Developer guide for the Kaya notification architecture.
+order: 8
+title: Notification Framework
+version: current
+---
+
+# Notification Framework
+
+## Architecture
+
+``` text
+Module
+  │
+  ▼
+State Transition
+  │
+  ▼
+Notification Outbox
+  │
+  ▼
+Notification Service
+  ├── In-App
+  ├── Push Queue
+  └── Email Queue
+```
+
+## Design Principles
+
+-   Backend-driven notifications
+-   Durable event storage
+-   Channel independence
+-   Transactional reliability
+-   Structured logging
+
+## Core Components
+
+-   Event Registry
+-   Transactional Outbox
+-   Recipient Resolution
+-   Delivery Workers
+-   Reconciliation Worker
+
+## Module Integration
+
+Modules publish notification events through the central notification
+service rather than sending Push or email directly.
+
+## Testing
+
+Every notification-enabled module should include automated tests
+covering:
+
+-   Event publication
+-   Recipient resolution
+-   In-app creation
+-   Push queueing
+-   Delivery worker behaviour
+-   Recovery events
