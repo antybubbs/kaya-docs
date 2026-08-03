@@ -1,114 +1,50 @@
 ---
-title: "Notifications"
-description: "Receive alerts from Kaya using in-app notifications, PWA Push and email."
+description: Receive alerts from Kaya using in-app notifications, PWA
+  Push and email.
 order: 11
-version: "current"
+title: Notifications
+version: current
 ---
 
-Kaya keeps you informed about important events across your infrastructure, even when you are not actively using the application.
+# Notifications
 
-Depending on how your administrator has configured Kaya, notifications can be delivered through:
+Kaya provides three notification channels:
 
-- In-app notifications
-- PWA Push notifications
-- Email notifications
+-   In-app
+-   PWA Push
+-   Email
 
 ## Notification Centre
 
-Select the **bell icon** in the top-right corner of Kaya to open the notification centre.
+Use the bell icon beside your avatar to view unread notifications, mark
+them as read and review notification history.
 
-Here you can:
+## Notification Preferences
 
-- View unread notifications
-- Mark notifications as read
-- View notification history
-- Open related resources directly
+Open **Avatar → Notification Preferences** to choose which events you
+receive through each available channel.
 
-Notifications remain available in Kaya even if Push delivery fails.
+## Enabling Push Notifications
 
-## Notification severity
-
-Notifications are grouped by severity.
-
-| Severity | Description |
-|----------|-------------|
-| Info | General information |
-| Success | Completed operations |
-| Warning | Something needs attention |
-| Critical | Failures or outages |
-
-## Notification preferences
-
-Open:
-
-**Avatar → Notification Preferences**
-
-Depending on administrator policy you can choose which notification channels are used for each event.
-
-Available channels include:
-
-- In-app
-- Push
-- Email
-
-Some notifications may be mandatory and cannot be disabled.
-
-## Enable Push notifications
-
-To enable Push notifications:
-
-1. Open Kaya on the device.
-2. Open **Notification Preferences**.
-3. Select **Enable Push Notifications**.
-4. Allow browser notification permissions.
-5. Enable Push for the events you wish to receive.
+1.  Open Kaya on the device.
+2.  Open **Notification Preferences**.
+3.  Enable Push Notifications.
+4.  Accept the browser permission request.
+5.  Enable Push for the required events.
 
 ## iPhone & iPad
 
-For Apple devices:
-
-1. Open Kaya in Safari.
-2. Select **Share → Add to Home Screen**.
-3. Open Kaya from the Home Screen icon.
-4. Enable Push notifications.
-
-Then confirm under:
-
-**Settings → Notifications → Kaya**
-
-that notifications are allowed.
-
-## Android & Desktop
-
-Most modern browsers support Push notifications directly.
-
-Register each browser separately if you wish to receive notifications on multiple devices.
-
-## Testing notifications
-
-Your administrator may provide notification diagnostics.
-
-Successful test notifications confirm:
-
-- Push registration
-- Device connectivity
-- Notification permissions
-
-They do not necessarily confirm that every Kaya module is publishing notification events correctly.
+Install Kaya using **Safari → Share → Add to Home Screen** before
+enabling Push notifications.
 
 ## Troubleshooting
 
-If you don't receive notifications:
+If notifications are not received:
 
-- Confirm Push is enabled
-- Confirm notification permissions are granted
-- Confirm the event is enabled
-- Confirm your device is registered
-- Confirm the notification appears inside Kaya
+-   Confirm the event was generated.
+-   Confirm your device is registered.
+-   Confirm notification permissions are enabled.
+-   Confirm the notification appears in Kaya.
 
-If a notification exists in Kaya but not on your device, contact your Kaya administrator.
-
-Related:
-
-- IP/WAN Monitor
-- Backup Manager
+If the notification exists in Kaya but not on your device, contact your
+administrator.
