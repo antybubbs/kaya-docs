@@ -1,45 +1,54 @@
-Notifications Administration
+---
+description: Configure and manage Kaya notifications.
+order: 5
+title: Notifications Administration
+version: current
+---
 
-Overview
+# Notifications Administration
 
-Notification Framework
+## Overview
 
-Global Settings
+Administrators control notification policies, delivery channels and Web
+Push configuration.
 
-Registered Notification Categories
+## Global Settings
 
-Delivery Channels
+Configure:
 
-• In-App
-• Push
-• Email
+-   In-App notifications
+-   PWA Push
+-   Email
+-   User customisation
 
-User Preferences
+## Web Push
 
-VAPID Key Management
+Generate and manage VAPID keys from **Site Administration →
+Notifications**.
 
-Generating Keys
+Kaya encrypts the private VAPID key using the installation
+`ENCRYPTION_KEY`.
 
-Rotating Keys
+## Delivery Health
 
-Deployment-managed Keys
+Review:
 
-Device Registration
+-   Worker status
+-   Queue health
+-   Active subscriptions
+-   Push failures
+-   Retry queues
 
-Delivery Health
+## Diagnostics
 
-Notification Workers
+Run:
 
-Outbox Processing
+-   In-app test
+-   Push test
+-   Delayed background Push test
+-   Production event simulation
 
-Push Delivery
+## Security
 
-Diagnostics
-
-Background Push Testing
-
-Troubleshooting
-
-Backup & Restore
-
-Security Considerations
+Only administrators may manage notification configuration. Private VAPID
+keys are never exposed through the UI, APIs or logs.
