@@ -1,1 +1,380 @@
+---
+title: "Upgrading Kaya from SQLite to PostgreSQL"
+description: "How to migrate an existing Kaya installation from SQLite to PostgreSQL."
+---
 
+# Upgrading Kaya from SQLite to PostgreSQL
+
+Kaya now uses **PostgreSQL 16.14** as the supported production database.
+
+Existing Kaya installations using SQLite can be migrated using the supplied upgrade Compose configuration. The migration preserves the original SQLite database and creates a verified backup before PostgreSQL is allowed to become authoritative.
+
+> **Important:** Plan a maintenance window before starting. Kaya will be unavailable during the one-time database migration.
+
+---
+
+## 1. Back up your existing installation
+
+Stop Kaya:
+
+```bash
+docker compose down
+```
+
+Create a separate copy of your existing data directory:
+
+```bash
+cp -a ./data ./data.sqlite-before-kaya-upgrade
+```
+
+Keep this backup until you have confirmed that the PostgreSQL migration has completed successfully and Kaya is operating normally.
+
+> **Warning**
+>
+> Do **not** use:
+>
+> ```bash
+> docker compose down -v
+> ```
+>
+> The `-v` option can remove persistent Docker volumes, including PostgreSQL data. It is not part of the Kaya upgrade procedure.
+
+---
+
+## 2. Pull the latest Kaya images
+
+```bash
+docker compose pull
+```
+
+---
+
+## 3. Run the SQLite to PostgreSQL migration
+
+Run the dedicated upgrade service:
+
+```bash
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.upgrade.yml \
+  run --rm sqlite-postgres-upgrade
+```
+
+This is a **one-time migration command** for existing SQLite installations.
+
+During the migration, Kaya will:
+
+1. Validate the existing SQLite database.
+2. Validate available storage and migration requirements.
+3. Create or reuse a verified pre-migration backup.
+4. Upgrade supported historical SQLite schemas where required.
+5. Prepare the PostgreSQL database.
+6. Copy the SQLite data into PostgreSQL.
+7. Validate source and target row counts.
+8. Perform deterministic integrity validation.
+9. Validate foreign-key relationships.
+10. Repair PostgreSQL sequences where required.
+11. Confirm the PostgreSQL database is valid.
+12. Mark PostgreSQL as authoritative only after all validation succeeds.
+
+The original SQLite database and migration backups are retained after conversion.
+
+---
+
+## 4. Allow the migration to complete
+
+Migration time depends on:
+
+- SQLite database size
+- Disk performance
+- Available free storage
+- Number of records
+- Hardware performance
+
+Large installations may take several minutes or longer.
+
+The migration can perform substantial disk I/O while validating, backing up and converting the database.
+
+> **Important**
+>
+> Do not terminate the migration simply because there is a period with little console output.
+>
+> Wait for the command to complete or report an explicit error.
+
+---
+
+## 5. Start Kaya normally
+
+After the migration completes successfully:
+
+```bash
+docker compose up -d
+```
+
+Check the container status:
+
+```bash
+docker compose ps
+```
+
+The Kaya container should become:
+
+```text
+healthy
+```
+
+You can inspect startup logs with:
+
+```bash
+docker compose logs --tail=100 kaya
+```
+
+A successfully migrated installation should report something similar to:
+
+```text
+Kaya database ready: engine=postgresql revision=<revision> migration_required=False
+```
+
+---
+
+## 6. PostgreSQL is now authoritative
+
+After successful cutover, Kaya will use PostgreSQL for normal operation.
+
+The old SQLite database remains available as a retained migration/recovery artifact, but it is **not** used as a runtime fallback.
+
+Future Kaya application upgrades use the normal process:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+Do **not** run `docker-compose.upgrade.yml` during normal application updates.
+
+---
+
+# Reverse proxy installations
+
+If Kaya is accessed through a reverse proxy such as:
+
+- Nginx Proxy Manager
+- Nginx
+- Traefik
+- Caddy
+- Cloudflare Tunnel
+- HAProxy
+- another HTTPS reverse proxy
+
+make sure the proxy that connects **directly to Kaya** is configured as a trusted proxy.
+
+Kaya uses:
+
+```env
+FORWARDED_ALLOW_IPS=
+```
+
+as the trust boundary for forwarded request information.
+
+For example, if your reverse proxy connects to Kaya from `192.168.1.3`:
+
+```env
+FORWARDED_ALLOW_IPS=127.0.0.1,192.168.1.3
+```
+
+Use the narrowest IP address or CIDR range appropriate for your environment.
+
+> **Security warning**
+>
+> Do not use:
+>
+> ```env
+> FORWARDED_ALLOW_IPS=*
+> ```
+>
+> on an installation that can be accessed directly by untrusted clients.
+>
+> Trusting arbitrary forwarded headers can allow clients to spoof proxy information.
+
+After changing `.env`, recreate Kaya:
+
+```bash
+docker compose up -d --force-recreate kaya
+```
+
+Then open:
+
+**Site Administration → Security**
+
+Under **Client IP and trusted proxy**, confirm:
+
+```text
+Request came through a trusted proxy
+Yes
+```
+
+If Kaya is externally accessed using HTTPS but the reverse proxy is not trusted, some generated URLs may incorrectly use the internal HTTP scheme.
+
+---
+
+# If the migration fails
+
+Kaya's SQLite to PostgreSQL migration is designed to **fail closed**.
+
+If validation cannot prove that the migration is safe, PostgreSQL will not become authoritative.
+
+Do **not** delete or manually modify migration artifacts.
+
+Preserve:
+
+```text
+data/kaya.db
+data/kaya.db-wal
+data/kaya.db-shm
+data/backups/
+data/kaya-database-upgrade.json
+data/kaya-database-upgrade-report.json
+```
+
+Also preserve the PostgreSQL data volume.
+
+Do not:
+
+```text
+delete the migration marker
+delete the SQLite database
+delete WAL/SHM files
+drop the PostgreSQL schema manually
+run ad-hoc migration SQL
+run docker compose down -v
+```
+
+Capture the migration logs before attempting recovery:
+
+```bash
+docker compose logs > kaya-upgrade.log
+```
+
+If you request support, include the relevant migration error and state information, but remove passwords, tokens, private hostnames or other sensitive deployment information.
+
+---
+
+# Migration backups
+
+Kaya creates a verified migration backup under:
+
+```text
+/app/data/backups
+```
+
+which normally corresponds to:
+
+```text
+./data/backups
+```
+
+on the host.
+
+Backup files use names similar to:
+
+```text
+pre-migration-<revision>-<timestamp>.sqlite3
+```
+
+with accompanying metadata.
+
+These backups should be retained until the PostgreSQL installation has been fully verified and incorporated into your normal PostgreSQL backup strategy.
+
+---
+
+# After migration
+
+Once PostgreSQL is active, operational database backups should use PostgreSQL-native backup tooling rather than copying `kaya.db`.
+
+The supported database architecture becomes:
+
+```text
+Kaya
+  ↓
+PostgreSQL 16.14
+  ↓
+kaya_postgres_data
+```
+
+The old SQLite database remains a migration/recovery artifact and should not be restored over an active PostgreSQL installation.
+
+---
+
+## Verify your installation
+
+After upgrading, confirm:
+
+- Kaya is healthy.
+- You can log in normally.
+- Existing users are present.
+- Dashboard information is populated.
+- Existing assets and configuration are present.
+- Notifications and audit history are available.
+- Remote Manager data is present where applicable.
+- PostgreSQL is shown on **About Kaya**.
+- Restarting Kaya does not trigger another SQLite migration.
+
+You can restart Kaya to confirm PostgreSQL remains authoritative:
+
+```bash
+docker compose restart kaya
+```
+
+Then check:
+
+```bash
+docker compose logs --tail=100 kaya
+```
+
+You should continue to see:
+
+```text
+engine=postgresql
+migration_required=False
+```
+
+---
+
+# Quick upgrade reference
+
+```bash
+# Stop the old installation
+docker compose down
+
+# Keep an independent copy of the SQLite data
+cp -a ./data ./data.sqlite-before-kaya-upgrade
+
+# Pull the new images
+docker compose pull
+
+# Run the one-time SQLite → PostgreSQL migration
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose.upgrade.yml \
+  run --rm sqlite-postgres-upgrade
+
+# Start Kaya normally
+docker compose up -d
+
+# Check health
+docker compose ps
+
+# Review startup
+docker compose logs --tail=100 kaya
+```
+
+> **Note**
+>
+> After successful migration, future Kaya upgrades return to the normal:
+>
+> ```bash
+> docker compose pull
+> docker compose up -d
+> ```
+>
+> workflow.
